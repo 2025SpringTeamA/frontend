@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 2025SpringTeamA Frontend
 
-## Getting Started
+### Purpose｜目的
+チーム開発の土台となるフロントエンド基盤を構築することを目的としています。Next.jsを中心に据え、Dockerによる環境整備や、ESLintによるコード品質の保持を通じて、再現性・効率・保守性の高い開発プロセスを実現します。
 
-First, run the development server:
+### Background｜背景
+チーム開発を円滑に進めるためには、環境の統一やコーディングスタイルの統一が欠かせません。このプロジェクトでは以下のような背景から構成を整えました：
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- 再現性のある環境構築のために、Dockerを導入
+- チームでの統一的なコーディングスタイルを実現するために、ESLintとPrettierを設定
+- 開発効率を高めるために、Makefileを用意
+- 拡張性のある設計を可能にするために、TypeScript + Next.js を採用
+
+### Structure｜ディレクトリ構成
+```
+frontend/
+├── docker-compose.yml       # Docker設定（開発環境）
+├── Dockerfile               # アプリ用Dockerイメージ定義
+├── eslint.config.mjs        # ESLint 設定
+├── Makefile                 # よく使うコマンドの簡略化
+├── next.config.ts           # Next.js 設定
+├── package.json             # 依存ライブラリ定義
+├── postcss.config.mjs       # Tailwind CSS等のPostCSS設定
+├── public/                  # 公開アセット（画像等）
+│   ├── *.svg
+├── README.md                # プロジェクト概要（このファイル）
+├── src/
+│   └── app/
+│       ├── favicon.ico      # ブラウザアイコン
+│       ├── globals.css      # 全体スタイル
+│       ├── layout.tsx       # レイアウトコンポーネント
+│       └── page.tsx         # トップページ
+└── tsconfig.json            # TypeScript 設定
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### How to Start｜起動方法
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### 前提条件
+- Docker / Docker Compose のインストール済み
+- make コマンドが使えること（Linux / macOS）
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+#### 起動手順
+```
+cd frontend
+make up       # コンテナを立ち上げて開発環境を起動
+```
+起動後、ブラウザで http://localhost:3000 にアクセス
 
-## Learn More
+#### よく使うコマンド
+```
+make build    # アプリケーションのビルド
+make lint     # コードチェック
+make down     # コンテナ停止
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Tech Stack｜使用技術
+- Next.js – Reactベースのフレームワーク
+- TypeScript – 型安全なJavaScript
+- Docker / Docker Compose – 仮想化された開発環境
+- ESLint / Prettier – コード品質管理ツール
+- PostCSS – CSS拡張処理
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Highlights｜工夫ポイント
+- Makefile によりコマンド操作の簡略化
+- ESLint でコードスタイルをチェック＆統一
+- Docker によって、全員が同じ環境で開発可能
+- public/ にSVGアイコンを集約し、UIに統一感を持たせやすい構成に
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Contribution｜コントリビューション
+このプロジェクトはオープンです。改善提案・バグ報告など、どんな貢献も大歓迎！
 
-## Deploy on Vercel
+#### プルリク手順
+1. feature/xxx ブランチを作成
+2. 修正をコミット
+3. main ブランチに向けてプルリクエストを作成
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Memo｜補足
+- 対象メンバー：Team A 全メンバー
+- 期間：2025年 春
+- 目的：実践的なチーム開発とフロントエンド技術の習得
+- 備考：本プロジェクトは今後バックエンド・デプロイとも連携予定
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
