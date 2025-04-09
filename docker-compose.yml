@@ -1,14 +1,24 @@
-# docker-compose.yml
+# Compose ファイルのバージョン指定（v3.8 は幅広く使われている安定バージョン）
 version: '3.8'
+
 services:
+  # サービス名（ここでは Next.js アプリ）
   next-app:
+    # コンテナ名を明示的に指定（省略するとサービス名がそのまま使われる）
     container_name: next-app
+    
+    # Dockerfile のあるディレクトリを指定してビルド
     build: .
+    
+    # ホストのポート3000をコンテナのポート3000にバインド（Next.js の開発サーバー用）
     ports:
       - "3000:3000"
+    
+    # ボリューム設定（ホスト側の変更をコンテナにリアルタイム反映）
     volumes:
-      - .:/app
-      - /app/node_modules
+      - .:/app                # カレントディレクトリをコンテナ内の /app にマウント
+      - /app/node_modules     # node_modules を匿名ボリュームとして扱い、ホスト側と分離
+
+    # ファイル変更の検知を安定させるための環境変数（特に WSL や Docker Desktop 環境で有効）
     environment:
       - CHOKIDAR_USEPOLLING=true
-
