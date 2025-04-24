@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-[#0a0a0a] text-white p-8 gap-10">
       <h1 className="text-3xl font-bold bg-gray-200 text-black px-10 py-4 rounded">
-        サブちゃん日記
+        さぶちゃん日記
       </h1>
 
       <p className="text-blue-400 font-semibold">{message}</p>
