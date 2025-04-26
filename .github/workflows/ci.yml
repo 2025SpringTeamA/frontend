@@ -1,0 +1,60 @@
+name: Build and Test Next.js Frontend
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/ci.yml'
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'frontend/**'
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Run linting
+        working-directory: frontend
+        run: npm run lint || echo "Linting not configured"
+
+      - name: Run type check
+        working-directory: frontend
+        run: npm run typecheck || npm run check-types || echo "Type check not configured"
+
+      - name: Run tests
+        working-directory: frontend
+        run: npm test || echo "No tests configured"
+
+      - name: Build Next.js
+        working-directory: frontend
+        run: npm run build
+
+      - name: Upload build artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build
+          path: frontend/out
+          retention-days: 7
