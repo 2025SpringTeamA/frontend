@@ -9,7 +9,16 @@ export default function AdminRegister() {
         管理者登録
       </h1>
 
-      <form className="flex flex-col gap-4 w-64">
+      <form className="flex flex-col gap-4 w-80">
+        <label className="bg-gray-200 text-black px-4 py-2 rounded">
+          ユーザー名：
+          <input
+            type="text"
+            className="w-full mt-1 p-1 rounded"
+            style={{ background: "white", color: "black" }}
+          />
+        </label>
+
         <label className="bg-gray-200 text-black px-4 py-2 rounded">
           メールアドレス：
           <input
@@ -28,6 +37,15 @@ export default function AdminRegister() {
           />
         </label>
 
+        <label className="bg-gray-200 text-black px-4 py-2 rounded">
+          PINコード：
+          <input
+            type="text"
+            className="w-full mt-1 p-1 rounded"
+            style={{ background: "white", color: "black" }}
+          />
+        </label>
+
         {/* ボタンエリア（次へ / 戻る） */}
         <div className="flex justify-between w-full mt-4">
           <Link
@@ -38,10 +56,10 @@ export default function AdminRegister() {
           </Link>
 
           <Link
-            href="/poem-admin"
+            href="/admin-home"
             className="bg-gray-200 text-black px-6 py-2 rounded hover:bg-gray-300 text-center"
           >
-            次へ
+            登録
           </Link>
         </div>
       </form>
