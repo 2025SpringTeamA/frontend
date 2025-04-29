@@ -9,7 +9,7 @@ export default function Register() {
         会員登録
       </h1>
 
-      <form className="flex flex-col gap-4 w-64">
+      <form className="flex flex-col gap-4 w-80">
         <label className="bg-gray-200 text-black px-4 py-2 rounded">
           ユーザー名：
           <input
@@ -49,10 +49,10 @@ export default function Register() {
 
           {/* 次へボタン */}
           <Link
-            href="/poem-auth"
+            href="/home"
             className="bg-gray-200 text-black px-6 py-2 rounded hover:bg-gray-300 text-center"
           >
-            次へ
+            登録
           </Link>
         </div>
       </form>
