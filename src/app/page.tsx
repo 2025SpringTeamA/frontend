@@ -8,7 +8,7 @@ export default function Home() {
   const [message, setMessage] = useState("Loading...");
 
   useEffect(() => {
-    fetch("http://localhost:8000/") // FastAPI の URL に合わせて変更
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/`) 
       .then((res) => res.json())
       .then((data) => setMessage(data.message))
       .catch(() => setMessage("Error fetching message from FastAPI."));
