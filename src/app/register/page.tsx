@@ -4,13 +4,13 @@ import Link from "next/link";
 
 export default function Register() {
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-[#0a0a0a] text-white p-8 gap-10">
-      <h1 className="text-3xl font-bold bg-gray-200 text-black px-10 py-4 rounded">
-        会員登録
+    <main className="flex flex-col items-center justify-center min-h-screen bg-white text-black p-8 gap-10">
+      <h1 className="text-3xl font-bold bg-[#226b22] text-[#f6e64c] px-10 py-4 rounded">
+        一般ユーザー登録
       </h1>
 
       <form className="flex flex-col gap-4 w-80">
-        <label className="bg-gray-200 text-black px-4 py-2 rounded">
+        <label className="bg-[#226b22] text-[#f6e64c] px-4 py-2 rounded">
           ユーザー名：
           <input
             type="text"
@@ -19,7 +19,7 @@ export default function Register() {
           />
         </label>
 
-        <label className="bg-gray-200 text-black px-4 py-2 rounded">
+        <label className="bg-[#226b22] text-[#f6e64c] px-4 py-2 rounded">
           メールアドレス：
           <input
             type="email"
@@ -28,7 +28,7 @@ export default function Register() {
           />
         </label>
 
-        <label className="bg-gray-200 text-black px-4 py-2 rounded">
+        <label className="bg-[#226b22] text-[#f6e64c] px-4 py-2 rounded">
           パスワード：
           <input
             type="password"
@@ -42,7 +42,7 @@ export default function Register() {
           {/* 戻るボタン */}
           <Link
             href="/"
-            className="bg-gray-200 text-black px-6 py-2 rounded hover:bg-gray-300 text-center"
+            className="bg-[#226b22] text-[#f6e64c] px-6 py-2 rounded hover:bg-[#1a561a] text-center"
           >
             戻る
           </Link>
@@ -50,7 +50,7 @@ export default function Register() {
           {/* 次へボタン */}
           <Link
             href="/home"
-            className="bg-gray-200 text-black px-6 py-2 rounded hover:bg-gray-300 text-center"
+            className="bg-[#226b22] text-[#f6e64c] px-6 py-2 rounded hover:bg-[#1a561a] text-center"
           >
             登録
           </Link>
