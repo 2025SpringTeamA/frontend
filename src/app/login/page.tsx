@@ -15,7 +15,7 @@ export default function Login() {
   };
 
   const handleConfirmPin = () => {
-    if (pinCode === "1234") {
+    if (pinCode === process.env.NEXT_PUBLIC_ADMIN_PIN) {
       router.push("/admin-home");
     } else {
       alert("PINコードが間違っています！");
