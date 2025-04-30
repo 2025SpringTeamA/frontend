@@ -5,9 +5,40 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPinDialog, setShowPinDialog] = useState(false);
   const [pinCode, setPinCode] = useState("");
   const router = useRouter();
+
+  const handleUserLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("http://localhost:8000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        console.log("ログイン成功:", data);
+        router.push("/home");
+      } else {
+        const error = await res.json();
+        alert(error.detail || "ログインに失敗しました");
+      }
+    } catch (err) {
+      console.error("通信エラー:", err);
+      alert("通信エラーが発生しました");
+    }
+  };
 
   const handleAdminClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -28,11 +59,14 @@ export default function Login() {
         ログイン
       </h1>
 
-      <form className="flex flex-col gap-6 w-[320px]">
+      <form onSubmit={handleUserLogin} className="flex flex-col gap-6 w-[320px]">
         <label className="bg-[#226b22] text-[#f6e64c] px-4 py-3 rounded">
-          ユーザー名：
+          メールアドレス：
           <input
-            type="text"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
             className="w-full mt-2 p-2 rounded"
             style={{ background: "white", color: "black" }}
           />
@@ -42,6 +76,9 @@ export default function Login() {
           パスワード：
           <input
             type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
             className="w-full mt-2 p-2 rounded"
             style={{ background: "white", color: "black" }}
           />
@@ -55,12 +92,12 @@ export default function Login() {
             管理ユーザー
           </button>
 
-          <Link
-            href="/home"
+          <button
+            type="submit"
             className="bg-[#226b22] text-[#f6e64c] px-6 py-2 rounded hover:bg-[#1a561a] w-[150px] text-center"
           >
             一般ユーザー
-          </Link>
+          </button>
         </div>
 
         <div className="flex justify-center mt-6">
