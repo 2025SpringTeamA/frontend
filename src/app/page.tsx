@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 // import Image from "next/image";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 export default function Home() {
@@ -15,24 +16,46 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-[#0a0a0a] text-white p-8 gap-10">
-      <h1 className="text-3xl font-bold bg-gray-200 text-black px-10 py-4 rounded">
-        さぶちゃん日記
-      </h1>
+    <main className="relative flex flex-col items-center justify-center min-h-screen bg-white text-black p-8 gap-10 overflow-hidden">
+      {/* アニメーション：右上 → 左下 → ロゴ位置 → 膨らんで弾ける */}
+      <motion.img
+        src="/images/sabuchan.png"
+        alt="弾けるさぶちゃん"
+        className="w-[200px] h-auto absolute z-0"
+        initial={{ x: 400, y: -400, scale: 1, opacity: 1 }}
+        animate={{
+          x: [400, -400, 0, 0],
+          y: [-400, 400, -100, -100], // -100 はロゴの縦位置目安
+          scale: [1, 1, 1, 2, 0],
+          opacity: [1, 1, 1, 1, 0],
+        }}
+        transition={{
+          duration: 6,
+          ease: "easeInOut",
+          times: [0, 0.4, 0.7, 0.85, 1],
+        }}
+      />
 
-      <p className="text-blue-400 font-semibold">{message}</p>
+      {/* 通常の静止ロゴ */}
+      <img
+        src="/images/sabuchan_logo.png"
+        alt="さぶちゃん日記"
+        className="w-[300px] h-auto rounded z-10"
+      />
 
-      <div className="flex flex-row gap-20">
+      <p className="text-blue-400 font-semibold z-10">{message}</p>
+
+      <div className="flex flex-row gap-20 z-10">
         <div className="flex flex-col gap-4">
           <Link
             href="/register"
-            className="bg-gray-200 text-black px-6 py-2 rounded hover:bg-gray-300 text-center"
+            className="bg-[#226b22] text-[#f6e64c] px-6 py-2 rounded hover:bg-[#1a561a] text-center"
           >
             一般ユーザー登録
           </Link>
           <Link
             href="/admin-register"
-            className="bg-gray-200 text-black px-6 py-2 rounded hover:bg-gray-300 text-center"
+            className="bg-[#226b22] text-[#f6e64c] px-6 py-2 rounded hover:bg-[#1a561a] text-center"
           >
             管理者登録
           </Link>
@@ -40,7 +63,7 @@ export default function Home() {
         <div className="flex items-center">
           <Link
             href="/login"
-            className="bg-gray-200 text-black px-6 py-2 rounded hover:bg-gray-300 text-center"
+            className="bg-[#226b22] text-[#f6e64c] px-6 py-2 rounded hover:bg-[#1a561a] text-center"
           >
             ログイン
           </Link>
