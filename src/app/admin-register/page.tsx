@@ -88,7 +88,7 @@ export default function AdminRegister() {
         <label className="bg-[#226b22] text-[#f6e64c] px-4 py-2 rounded">
           PINコード：
           <input
-            type="text"
+            type="password"
             value={pinCode}
             onChange={(e) => setPinCode(e.target.value)}
             required
