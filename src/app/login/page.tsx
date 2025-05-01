@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import "../../styles/common.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -10,6 +11,13 @@ export default function Login() {
   const [showPinDialog, setShowPinDialog] = useState(false);
   const [pinCode, setPinCode] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    document.body.classList.add("washitsu");
+    return () => {
+      document.body.classList.remove("washitsu");
+    };
+  }, []);
 
   const handleUserLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,10 +28,7 @@ export default function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
+        body: JSON.stringify({ email, password }),
       });
 
       if (res.ok) {
@@ -35,7 +40,6 @@ export default function Login() {
         alert(error.detail || "ログインに失敗しました");
       }
     } catch (err) {
-      console.error("通信エラー:", err);
       alert("通信エラーが発生しました");
     }
   };
@@ -54,84 +58,66 @@ export default function Login() {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-white text-black p-8 pt-16 gap-10">
-      <h1 className="text-3xl font-bold bg-[#226b22] text-[#f6e64c] px-10 py-4 rounded">
-        ログイン
-      </h1>
+    <main className="flex flex-col items-center justify-start min-h-screen pt-12 gap-10">
+      <h1 className="kakejiku">ログイン</h1>
 
-      <form onSubmit={handleUserLogin} className="flex flex-col gap-6 w-[320px]">
-        <label className="bg-[#226b22] text-[#f6e64c] px-4 py-3 rounded">
-          メールアドレス：
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full mt-2 p-2 rounded"
-            style={{ background: "white", color: "black" }}
-          />
-        </label>
+      <form onSubmit={handleUserLogin} className="fusuma-form">
+        <label htmlFor="email">メールアドレス</label>
+        <input
+          id="email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
 
-        <label className="bg-[#226b22] text-[#f6e64c] px-4 py-3 rounded">
-          パスワード：
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="w-full mt-2 p-2 rounded"
-            style={{ background: "white", color: "black" }}
-          />
-        </label>
+        <label htmlFor="password">パスワード</label>
+        <input
+          id="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
 
-        <div className="flex justify-between">
-          <button
-            onClick={handleAdminClick}
-            className="bg-[#226b22] text-[#f6e64c] px-6 py-2 rounded hover:bg-[#1a561a] w-[150px] text-center"
-          >
+        <div className="form-button-group">
+          <button type="button" onClick={handleAdminClick} className="button-submit">
             管理ユーザー
           </button>
-
-          <button
-            type="submit"
-            className="bg-[#226b22] text-[#f6e64c] px-6 py-2 rounded hover:bg-[#1a561a] w-[150px] text-center"
-          >
+          <button type="submit" className="button-submit">
             一般ユーザー
           </button>
         </div>
 
-        <div className="flex justify-center mt-6">
-          <Link
-            href="/"
-            className="bg-[#226b22] text-[#f6e64c] px-6 py-2 rounded hover:bg-[#1a561a] w-[140px] text-center"
-          >
+        <div className="flex justify-center mt-4">
+          <Link href="/" className="button-back">
             戻る
           </Link>
         </div>
       </form>
 
       {showPinDialog && (
-        <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-100">
-          <div className="bg-white text-black p-8 rounded flex flex-col items-center gap-4 border border-black">
-            <h2 className="text-xl font-bold">PINコードを入力してください</h2>
+        <div className="fixed inset-0 flex items-center justify-center modal-bg z-50">
+          <div className="bg-white border border-black rounded p-6 flex flex-col items-center gap-4">
+            <h2 className="text-lg font-bold text-black">PINコードを入力してください</h2>
             <input
               type="password"
               value={pinCode}
               onChange={(e) => setPinCode(e.target.value)}
-              className="border border-gray-300 rounded p-2 w-48 text-center"
+              className="border border-gray-400 rounded p-2 w-48 text-center"
             />
-            <div className="flex gap-4 mt-4">
-              <button
-                onClick={handleConfirmPin}
-                className="bg-[#226b22] text-[#f6e64c] px-4 py-2 rounded hover:bg-[#1a561a]"
-              >
-                確認
-              </button>
+            <div className="form-button-group">
               <button
                 onClick={() => setShowPinDialog(false)}
-                className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
+                className="button-back"
               >
                 キャンセル
+              </button>
+              <button
+                onClick={handleConfirmPin}
+                className="button-submit"
+              >
+                確認
               </button>
             </div>
           </div>

@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import "../../styles/common.css";
 
 export default function AdminRegister() {
   const [userName, setUserName] = useState("");
@@ -10,6 +11,13 @@ export default function AdminRegister() {
   const [password, setPassword] = useState("");
   const [pinCode, setPinCode] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    document.body.classList.add("washitsu");
+    return () => {
+      document.body.classList.remove("washitsu");
+    };
+  }, []);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,72 +51,51 @@ export default function AdminRegister() {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-white text-black p-8 gap-10">
-      <h1 className="text-3xl font-bold bg-[#226b22] text-[#f6e64c] px-10 py-4 rounded">
-        管理ユーザー登録
-      </h1>
+    <main className="flex flex-col items-center justify-start min-h-screen pt-12 gap-10">
+      <h1 className="kakejiku">管理ユーザー登録</h1>
 
-      <form onSubmit={handleRegister} className="flex flex-col gap-4 w-80">
-        <label className="bg-[#226b22] text-[#f6e64c] px-4 py-2 rounded">
-          ユーザー名：
-          <input
-            type="text"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-            required
-            className="w-full mt-1 p-1 rounded"
-            style={{ background: "white", color: "black" }}
-          />
-        </label>
+      <form onSubmit={handleRegister} className="fusuma-form">
+        <label htmlFor="username">お名前</label>
+        <input
+          id="username"
+          type="text"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+          required
+        />
 
-        <label className="bg-[#226b22] text-[#f6e64c] px-4 py-2 rounded">
-          メールアドレス：
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full mt-1 p-1 rounded"
-            style={{ background: "white", color: "black" }}
-          />
-        </label>
+        <label htmlFor="email">メールアドレス</label>
+        <input
+          id="email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
 
-        <label className="bg-[#226b22] text-[#f6e64c] px-4 py-2 rounded">
-          パスワード：
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="w-full mt-1 p-1 rounded"
-            style={{ background: "white", color: "black" }}
-          />
-        </label>
+        <label htmlFor="password">パスワード</label>
+        <input
+          id="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
 
-        <label className="bg-[#226b22] text-[#f6e64c] px-4 py-2 rounded">
-          PINコード：
-          <input
-            type="password"
-            value={pinCode}
-            onChange={(e) => setPinCode(e.target.value)}
-            required
-            className="w-full mt-1 p-1 rounded"
-            style={{ background: "white", color: "black" }}
-          />
-        </label>
+        <label htmlFor="pinCode">PINコード</label>
+        <input
+          id="pinCode"
+          type="password"
+          value={pinCode}
+          onChange={(e) => setPinCode(e.target.value)}
+          required
+        />
 
-        <div className="flex justify-between w-full mt-4">
-          <Link
-            href="/"
-            className="bg-[#226b22] text-[#f6e64c] px-6 py-2 rounded hover:bg-[#1a561a] text-center"
-          >
+        <div className="form-button-group">
+          <Link href="/" className="button-back">
             戻る
           </Link>
-
-          <button
-            type="submit"
-            className="bg-[#226b22] text-[#f6e64c] px-6 py-2 rounded hover:bg-[#1a561a]"
-          >
+          <button type="submit" className="button-submit">
             登録
           </button>
         </div>
