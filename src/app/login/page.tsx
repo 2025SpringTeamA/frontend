@@ -39,7 +39,7 @@ export default function Login() {
         const error = await res.json();
         alert(error.detail || "ログインに失敗しました");
       }
-    } catch (err) {
+    } catch {
       alert("通信エラーが発生しました");
     }
   };

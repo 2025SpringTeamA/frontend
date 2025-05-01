@@ -38,7 +38,7 @@ export default function Register() {
         const error = await res.json();
         alert(error.detail || "登録に失敗しました");
       }
-    } catch (err) {
+    } catch {
       alert("通信エラーが発生しました");
     }
   };
