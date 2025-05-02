@@ -18,7 +18,7 @@ export default function Home() {
             width={200}
             height={100}
           ></Image>
-          <p className="mt-2 text-center">三郎おじいちゃん</p>
+          <p className="text-white mt-2 text-center">三郎おじいちゃん</p>
         </Link>
         <Link href="/beautiful-woman-mode">
           <Image
@@ -27,7 +27,7 @@ export default function Home() {
             width={200}
             height={100}
           ></Image>
-          <p className="mt-2 text-center">美女</p>
+          <p className="text-white mt-2 text-center">美女</p>
         </Link>
       </div>
     </>
