@@ -6,7 +6,7 @@ import NavBar from "@/components/NavBar";
 
 import Link from "next/link";
 
-export default function Home(params: type) {
+export default function Home() {
   const handleClick = () => {
     const confirmed = window.confirm("本当に削除してもよろしいですか？");
   };
