@@ -49,7 +49,11 @@ jobs:
 
       - name: Build Next.js
         working-directory: frontend
-        run: npm run build
+        run: |
+          NEXT_PUBLIC_API_URL="${{ github.event_name != 'pull_request' && secrets.PROD_API_URL || secrets.DEV_API_URL }}" \
+          NEXT_PUBLIC_ADMIN_PIN="${{ secrets.ADMIN_PIN }}" \
+          NODE_ENV="${{ github.event_name != 'pull_request' && 'production' || 'development' }}" \
+          npm run build
 
       - name: Upload build artifact
         if: github.event_name != 'pull_request'
