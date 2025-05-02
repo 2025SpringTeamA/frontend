@@ -21,22 +21,23 @@ export default function Home() {
 
   return (
     <main className="relative flex flex-col items-center justify-center min-h-screen gap-10 overflow-hidden">
-      {/* アニメーション：右上 → 左下 → ロゴ位置 → 膨らんで弾ける */}
+      {/* アニメーション：右上 → 左下で回転＆弾ける */}
       <motion.img
         src="/images/sabuchan.png"
         alt="弾けるさぶちゃん"
         className="w-[200px] h-auto absolute z-0"
-        initial={{ x: 400, y: -400, scale: 1, opacity: 1 }}
+        initial={{ x: 400, y: -400, rotate: 0, scale: 1, opacity: 1 }}
         animate={{
-          x: [400, -400, 0, 0],
-          y: [-400, 400, -100, -100],
-          scale: [1, 1, 1, 2, 0],
+          x: [400, 200, 0, -200, -400],
+          y: [-400, -200, 0, 200, 400],
+          rotate: [0, 90, 180, 270, 360],
+          scale: [1, 1, 1, 1.3, 0],
           opacity: [1, 1, 1, 1, 0],
         }}
         transition={{
-          duration: 6,
+          duration: 3,
           ease: "easeInOut",
-          times: [0, 0.4, 0.7, 0.85, 1],
+          times: [0, 0.25, 0.5, 0.75, 1],
         }}
       />
 
