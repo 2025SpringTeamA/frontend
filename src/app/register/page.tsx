@@ -22,12 +22,16 @@ export default function Register() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:8000/register", {
+      const res = await fetch("http://localhost:8000/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({
+          email,
+          password,
+          user_name: userName, // ← 修正：FastAPIと合わせる
+        }),
       });
 
       if (res.ok) {
