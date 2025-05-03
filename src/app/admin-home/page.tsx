@@ -74,7 +74,7 @@ export default function AdminDashboard() {
         <div className="flex flex-col gap-4">
           <Link href="/admin-home/admin-users" className="top-button text-center">ユーザー管理</Link>
           <Link href="/admin-home/admin-posts" className="top-button text-center">投稿内容の一覧</Link>
-          <button className="top-button">設定変更</button>
+          <Link href="/admin-home/admin-settings" className="top-button text-center">設定変更</Link>
         </div>
       </aside>
 
