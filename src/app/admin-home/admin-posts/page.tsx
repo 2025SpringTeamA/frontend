@@ -1,16 +1,36 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import "../../../styles/common.css";
 
+interface Message {
+  id: number;
+  user: { user_name: string } | null;
+  content: string;
+  created_at: string;
+}
+
 export default function PostListPage() {
+  const [messages, setMessages] = useState<Message[]>([]);
+
   useEffect(() => {
     document.body.classList.add("washitsu");
+    fetchMessages();
     return () => {
       document.body.classList.remove("washitsu");
     };
   }, []);
+
+  const fetchMessages = async () => {
+    try {
+      const res = await fetch("http://localhost:8000/messages");
+      const data = await res.json();
+      setMessages(data);
+    } catch (error) {
+      console.error("投稿の取得に失敗しました", error);
+    }
+  };
 
   return (
     <main className="relative flex h-screen w-full">
@@ -44,17 +64,21 @@ export default function PostListPage() {
               </tr>
             </thead>
             <tbody>
-              {/* 仮データ */}
-              <tr>
-                <td className="p-2 border">田中 太郎</td>
-                <td className="p-2 border">こんにちは、これはテスト投稿です！</td>
-                <td className="p-2 border">2025/05/01</td>
-              </tr>
-              <tr>
-                <td className="p-2 border">鈴木 花子</td>
-                <td className="p-2 border">本日は晴天なり☀️</td>
-                <td className="p-2 border">2025/05/02</td>
-              </tr>
+              {messages.length > 0 ? (
+                messages.map((msg) => (
+                  <tr key={msg.id}>
+                    <td className="p-2 border">{msg.user?.user_name || "匿名"}</td>
+                    <td className="p-2 border">{msg.content}</td>
+                    <td className="p-2 border">{new Date(msg.created_at).toLocaleDateString()}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={3} className="p-2 border text-center text-gray-500">
+                    投稿がまだありません。
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
