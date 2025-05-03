@@ -33,7 +33,7 @@ export default function Login() {
 
       if (res.ok) {
         const data = await res.json();
-        console.log("ログイン成功:", data);
+        console.log("一般ユーザーログイン成功:", data);
         router.push("/home");
       } else {
         const error = await res.json();
@@ -49,11 +49,26 @@ export default function Login() {
     setShowPinDialog(true);
   };
 
-  const handleConfirmPin = () => {
-    if (pinCode === process.env.NEXT_PUBLIC_ADMIN_PIN) {
-      router.push("/admin-home");
-    } else {
-      alert("PINコードが間違っています！");
+  const handleAdminLogin = async () => {
+    try {
+      const res = await fetch("http://localhost:8000/admin/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password, pin_code: pinCode }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        console.log("管理者ログイン成功:", data);
+        router.push("/admin-home");
+      } else {
+        const error = await res.json();
+        alert(error.detail || "管理者ログインに失敗しました");
+      }
+    } catch {
+      alert("通信エラーが発生しました");
     }
   };
 
@@ -114,7 +129,7 @@ export default function Login() {
                 キャンセル
               </button>
               <button
-                onClick={handleConfirmPin}
+                onClick={handleAdminLogin}
                 className="button-submit"
               >
                 確認
