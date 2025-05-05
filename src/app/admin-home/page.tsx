@@ -5,11 +5,28 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import "../../styles/common.css";
 
+// 管理者情報の型
+type AdminInfo = {
+  email: string;
+};
+
+// ユーザー情報の型（必要に応じて追加可能）
+type User = {
+  is_active: boolean;
+};
+
+// メッセージ情報の型（必要に応じて追加可能）
+type Message = {
+  id: number;
+  content: string;
+  // 他のプロパティがあるなら追加
+};
+
 export default function AdminDashboard() {
-  const [adminEmail, setAdminEmail] = useState("");
-  const [userCount, setUserCount] = useState(0);
-  const [inactiveCount, setInactiveCount] = useState(0);
-  const [messageCount, setMessageCount] = useState(0);
+  const [adminEmail, setAdminEmail] = useState<string>("");
+  const [userCount, setUserCount] = useState<number>(0);
+  const [inactiveCount, setInactiveCount] = useState<number>(0);
+  const [messageCount, setMessageCount] = useState<number>(0);
   const router = useRouter();
 
   useEffect(() => {
@@ -21,15 +38,9 @@ export default function AdminDashboard() {
     };
   }, []);
 
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = async (): Promise<void> => {
     try {
       const token = localStorage.getItem("token");
-
-      // トークン未設定時のリダイレクト（コメントアウト中）
-      // if (!token) {
-      //   router.push("/login");
-      //   return;
-      // }
 
       const headers = {
         Authorization: `Bearer ${token}`,
@@ -42,25 +53,19 @@ export default function AdminDashboard() {
       ]);
 
       if (adminRes.ok && usersRes.ok && messagesRes.ok) {
-        const admin = await adminRes.json();
-        const users = await usersRes.json();
-        const messages = await messagesRes.json();
+        const admin: AdminInfo = await adminRes.json();
+        const users: User[] = await usersRes.json();
+        const messages: Message[] = await messagesRes.json();
 
         setAdminEmail(admin.email);
         setUserCount(users.length);
-        setInactiveCount(users.filter((u: any) => !u.is_active).length);
+        setInactiveCount(users.filter((u) => !u.is_active).length);
         setMessageCount(messages.length);
       } else {
         alert("情報の取得に失敗しました。再ログインしてください。");
-
-        // 認証エラー時のリダイレクト（コメントアウト中）
-        // router.push("/login");
       }
-    } catch (error) {
+    } catch (error: unknown) {
       alert("通信エラーが発生しました");
-
-      // 通信エラー時のリダイレクト（コメントアウト中）
-      // router.push("/login");
     }
   };
 
@@ -72,9 +77,15 @@ export default function AdminDashboard() {
           <div className="text-xl font-bold mb-6">さぶちゃん管理システム</div>
         </div>
         <div className="flex flex-col gap-4">
-          <Link href="/admin-home/admin-users" className="top-button text-center">ユーザー管理</Link>
-          <Link href="/admin-home/admin-posts" className="top-button text-center">投稿内容の一覧</Link>
-          <Link href="/admin-home/admin-settings" className="top-button text-center">設定変更</Link>
+          <Link href="/admin-home/admin-users" className="top-button text-center">
+            ユーザー管理
+          </Link>
+          <Link href="/admin-home/admin-posts" className="top-button text-center">
+            投稿内容の一覧
+          </Link>
+          <Link href="/admin-home/admin-settings" className="top-button text-center">
+            設定変更
+          </Link>
         </div>
       </aside>
 
@@ -82,7 +93,9 @@ export default function AdminDashboard() {
       <section className="ml-64 flex-grow bg-white p-10 relative overflow-hidden">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-semibold">ダッシュボード</h1>
-          <Link href="/" className="text-blue-600 hover:underline">ログアウト</Link>
+          <Link href="/" className="text-blue-600 hover:underline">
+            ログアウト
+          </Link>
         </div>
 
         <p className="mb-6">こんにちは、{adminEmail} さん！</p>
@@ -96,7 +109,6 @@ export default function AdminDashboard() {
           </ul>
         </div>
 
-        {/* アニメーションロゴ */}
         <img
           src="/images/sabuchan_logo.png"
           alt="さぶちゃん日記"
