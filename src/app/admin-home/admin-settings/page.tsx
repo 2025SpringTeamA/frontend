@@ -5,9 +5,9 @@ import Link from "next/link";
 import "../../../styles/common.css";
 
 export default function AdminSettingsPage() {
-  const [message, setMessage] = useState("");
-  const [newMessage, setNewMessage] = useState("");
-  const [status, setStatus] = useState("");
+  const [message, setMessage] = useState<string>("");
+  const [newMessage, setNewMessage] = useState<string>("");
+  const [status, setStatus] = useState<string>("");
 
   useEffect(() => {
     document.body.classList.add("washitsu");
@@ -17,10 +17,15 @@ export default function AdminSettingsPage() {
     };
   }, []);
 
+  // サーバーからのレスポンスの型
+  interface SettingsResponse {
+    support_message: string;
+  }
+
   const fetchCurrentMessage = async () => {
     try {
       const res = await fetch("http://localhost:8000/settings");
-      const data = await res.json();
+      const data: SettingsResponse = await res.json();
       setMessage(data.support_message);
       setNewMessage(data.support_message);
     } catch (err) {
@@ -35,6 +40,7 @@ export default function AdminSettingsPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ new_message: newMessage }),
       });
+
       if (res.ok) {
         setStatus("✅ 更新が完了しました。");
         fetchCurrentMessage();
@@ -76,7 +82,7 @@ export default function AdminSettingsPage() {
           <h3 className="font-bold mt-6">新しいメッセージ</h3>
           <textarea
             value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setNewMessage(e.target.value)}
             className="w-full p-2 border rounded h-32"
             placeholder="新しいサポートメッセージを入力してください"
           />
