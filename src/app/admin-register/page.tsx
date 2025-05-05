@@ -5,11 +5,23 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import "../../styles/common.css";
 
-export default function AdminRegister() {
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [pinCode, setPinCode] = useState("");
+// サーバーからの成功レスポンス型（必要に応じて拡張）
+type RegisterResponse = {
+  message: string;
+  token?: string;
+};
+
+// サーバーからのエラーレスポンス型
+type ErrorResponse = {
+  detail?: string;
+};
+
+export default function AdminRegister(): JSX.Element {
+  const [userName, setUserName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [pinCode, setPinCode] = useState<string>("");
+
   const router = useRouter();
 
   useEffect(() => {
@@ -19,7 +31,7 @@ export default function AdminRegister() {
     };
   }, []);
 
-  const handleRegister = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
     try {
@@ -37,15 +49,19 @@ export default function AdminRegister() {
       });
 
       if (res.ok) {
-        const data = await res.json();
+        const data: RegisterResponse = await res.json();
         console.log("登録成功:", data);
         router.push("/admin-home");
       } else {
-        const error = await res.json();
+        const error: ErrorResponse = await res.json();
         alert(error.detail || "登録に失敗しました");
       }
-    } catch (err) {
-      console.error("通信エラー:", err);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error("通信エラー:", err.message);
+      } else {
+        console.error("未知のエラー:", err);
+      }
       alert("通信エラーが発生しました");
     }
   };
@@ -60,7 +76,7 @@ export default function AdminRegister() {
           id="username"
           type="text"
           value={userName}
-          onChange={(e) => setUserName(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUserName(e.target.value)}
           required
         />
 
@@ -69,7 +85,7 @@ export default function AdminRegister() {
           id="email"
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
           required
         />
 
@@ -78,7 +94,7 @@ export default function AdminRegister() {
           id="password"
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
           required
         />
 
@@ -87,7 +103,7 @@ export default function AdminRegister() {
           id="pinCode"
           type="password"
           value={pinCode}
-          onChange={(e) => setPinCode(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPinCode(e.target.value)}
           required
         />
 
