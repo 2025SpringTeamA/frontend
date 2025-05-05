@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import "../../styles/common.css"; // 共通CSSを読み込み
 
-export default function Register() {
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Register: React.FC = () => {
+  const [userName, setUserName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const router = useRouter();
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function Register() {
     };
   }, []);
 
-  const handleRegister = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -30,7 +30,7 @@ export default function Register() {
         body: JSON.stringify({
           email,
           password,
-          user_name: userName, // ← 修正：FastAPIと合わせる
+          user_name: userName, // FastAPIと合わせる
         }),
       });
 
@@ -90,4 +90,6 @@ export default function Register() {
       </form>
     </main>
   );
-}
+};
+
+export default Register;
