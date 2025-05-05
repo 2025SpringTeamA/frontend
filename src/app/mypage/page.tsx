@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import "@/styles/common.css";
 
 export default function Home() {
-  const handleClick = () => {
+  const handleDeleteClick = () => {
     const confirmed = window.confirm("本当に削除してもよろしいですか？");
   };
   useEffect(() => {
@@ -32,7 +32,6 @@ export default function Home() {
           placeholder="ユーザ名"
           name="text"
           style={{ background: "white", color: "black" }}
-          //   onChange={handleChange}
         />
       </div>
       <div className="flex flex-col items-center">
@@ -42,17 +41,22 @@ export default function Home() {
           placeholder="パスワード"
           name="password"
           style={{ background: "white", color: "black" }}
-          //   onChange={handleChange}
         />
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex items-center space-x-4">
         <Link
-          // onClick={handleClick}
           href="/mypage-edit"
           className="bg-gray-200 text-black px-4 py-2 rounded hover:bg-gray-300 w-[140px]"
         >
           変更
         </Link>
+
+        <Button
+          className="bg-gray-200 text-black px-4 py-2 rounded hover:bg-gray-300"
+          onClick={handleDeleteClick}
+        >
+          削除
+        </Button>
       </div>
     </>
   );
