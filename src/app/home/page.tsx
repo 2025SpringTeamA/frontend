@@ -4,8 +4,15 @@ import NavBar from "@/components/NavBar";
 import Logo from "@/components/Logo";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 
 export default function Home() {
+  useEffect(() => {
+    document.body.classList.add("washitsu");
+    return () => {
+      document.body.classList.remove("washitsu");
+    };
+  }, []);
   return (
     <>
       <Logo />
@@ -18,7 +25,7 @@ export default function Home() {
             width={200}
             height={100}
           ></Image>
-          <p className="text-white mt-2 text-center">三郎おじいちゃん</p>
+          <p className="text-black mt-2 text-center">三郎おじいちゃん</p>
         </Link>
         <Link href="/beautiful-woman-mode">
           <Image
@@ -27,7 +34,7 @@ export default function Home() {
             width={200}
             height={100}
           ></Image>
-          <p className="text-white mt-2 text-center">美女</p>
+          <p className="text-black mt-2 text-center">美女</p>
         </Link>
       </div>
     </>
