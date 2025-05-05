@@ -5,14 +5,14 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import "../styles/common.css";
 
-export default function Home() {
-  const [message, setMessage] = useState("Loading...");
+const Home: React.FC = () => {
+  const [message, setMessage] = useState<string>("Loading...");  
 
   useEffect(() => {
     document.body.classList.add("washitsu"); // ← 背景などを適用
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/`)
       .then((res) => res.json())
-      .then((data) => setMessage(data.message))
+      .then((data: { message: string }) => setMessage(data.message))
       .catch(() => setMessage("Error fetching message from FastAPI."));
     return () => {
       document.body.classList.remove("washitsu");
@@ -68,3 +68,5 @@ export default function Home() {
     </main>
   );
 }
+
+export default Home;
