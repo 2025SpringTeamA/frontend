@@ -28,7 +28,7 @@ export default function UserManagement() {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:8000/users", {
+      const res = await fetch("http://localhost:8000/api/users", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -50,7 +50,7 @@ export default function UserManagement() {
   const handleUpdate = async () => {
     try {
       const token = localStorage.getItem("token");
-      await fetch(`http://localhost:8000/users/${editUser?.id}`, {
+      await fetch(`http://localhost:8000/api/users/${editUser?.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -67,7 +67,7 @@ export default function UserManagement() {
 
   const handleDeactivate = async (id: number) => {
     const token = localStorage.getItem("token");
-    await fetch(`http://localhost:8000/users/${id}/deactivate`, {
+    await fetch(`http://localhost:8000/api/users/${id}/deactivate`, {
       method: "PATCH",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -76,7 +76,7 @@ export default function UserManagement() {
 
   const handleActivate = async (id: number) => {
     const token = localStorage.getItem("token");
-    await fetch(`http://localhost:8000/users/${id}/activate`, {
+    await fetch(`http://localhost:8000/api/users/${id}/activate`, {
       method: "PATCH",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -86,7 +86,7 @@ export default function UserManagement() {
   const handleDelete = async (id: number) => {
     if (!confirm("本当に削除しますか？")) return;
     const token = localStorage.getItem("token");
-    await fetch(`http://localhost:8000/users/${id}`, {
+    await fetch(`http://localhost:8000/api/users/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
