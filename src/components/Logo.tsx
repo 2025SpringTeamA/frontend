@@ -6,7 +6,7 @@ import Image from "next/image";
 export default function Logo() {
   return (
     <>
-      <header className="w-full p-4">
+      <header className="absolute top-0 left-0 p-2">
         <div className="flex items-start justify-start m-0 p-0">
           <Link href="/home">
             <Image
