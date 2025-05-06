@@ -7,9 +7,18 @@ import { useEffect, useState } from "react";
 
 export default function SabutyanMode() {
   const [message, setMessage] = useState("");
+  const [token, setToken] = useState("");
+  const [sessionId, setSessionId] = useState("");
 
   useEffect(() => {
     document.body.classList.add("washitsu");
+
+    const storedToken = localStorage.getItem("token");
+    const storedSessionId = localStorage.getItem("session_id");
+
+    if (storedToken) setToken(storedToken);
+    if (storedSessionId) setSessionId(storedSessionId);
+
     return () => {
       document.body.classList.remove("washitsu");
     };
@@ -34,6 +43,37 @@ export default function SabutyanMode() {
     }
   };
 
+  const handleMessageSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!token || !sessionId) {
+      alert("ログイン情報が不足しています");
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/sessions/${sessionId}/messages`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          content: message,
+        }),
+      });
+
+      if (!res.ok) throw new Error("メッセージ送信に失敗しました");
+
+      const result = await res.json();
+      alert("メッセージを送信しました！");
+      setMessage("");
+    } catch (error) {
+      console.error(error);
+      alert("メッセージ送信中にエラーが発生しました");
+    }
+  };
+
   return (
     <>
       <Logo />
@@ -52,7 +92,10 @@ export default function SabutyanMode() {
         </div>
 
         {/* メッセージ送信フォーム */}
-        <form className="fusuma-form text-lg md:text-xl">
+        <form
+          onSubmit={handleMessageSubmit}
+          className="fusuma-form text-lg md:text-xl"
+        >
           <label htmlFor="message">メッセージ</label>
           <textarea
             id="message"
@@ -69,7 +112,10 @@ export default function SabutyanMode() {
 
         {/* 元気をもらうボタン */}
         <div className="w-full max-w-md flex justify-end mt-2">
-          <button className="tatami-button text-lg px-6 py-3" onClick={handleEnergy}>
+          <button
+            className="tatami-button text-lg px-6 py-3"
+            onClick={handleEnergy}
+          >
             元気をもらう
           </button>
         </div>
