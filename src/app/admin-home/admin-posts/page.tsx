@@ -24,7 +24,7 @@ export default function PostListPage() {
 
   const fetchMessages = async () => {
     try {
-      const res = await fetch("http://localhost:8000/messages");
+      const res = await fetch("http://localhost:8000/api/messages");
       const data = await res.json();
       setMessages(data);
     } catch (error) {
