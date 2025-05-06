@@ -24,7 +24,7 @@ export default function AdminSettingsPage() {
 
   const fetchCurrentMessage = async () => {
     try {
-      const res = await fetch("http://localhost:8000/settings");
+      const res = await fetch("http://localhost:8000/api/settings");
       const data: SettingsResponse = await res.json();
       setMessage(data.support_message);
       setNewMessage(data.support_message);
@@ -35,7 +35,7 @@ export default function AdminSettingsPage() {
 
   const updateMessage = async () => {
     try {
-      const res = await fetch("http://localhost:8000/settings", {
+      const res = await fetch("http://localhost:8000/api/settings", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ new_message: newMessage }),
