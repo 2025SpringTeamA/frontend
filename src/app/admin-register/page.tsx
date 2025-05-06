@@ -35,7 +35,7 @@ export default function AdminRegister(): JSX.Element {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:8000/admin/register/", {
+      const res = await fetch("http://localhost:8000/api/admin/register/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
