@@ -22,6 +22,7 @@ export default function Home() {
   return (
     <>
       <Logo />
+      <h2 className="text-xl font-semibold mb-4">マイページ</h2>
       <NavBar />
       <div className="flex flex-col items-center space-y-4">
         <div className="flex flex-col space-y-1 w-full max-w-sm">
