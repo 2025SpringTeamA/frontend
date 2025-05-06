@@ -34,6 +34,10 @@ export default function Login() {
       if (res.ok) {
         const data = await res.json();
         console.log("一般ユーザーログイン成功:", data);
+
+        // 🔑 トークン保存
+        localStorage.setItem("token", data.token);
+
         router.push("/home");
       } else {
         const error = await res.json();
@@ -62,6 +66,10 @@ export default function Login() {
       if (res.ok) {
         const data = await res.json();
         console.log("管理者ログイン成功:", data);
+
+        // 🔑 トークン保存
+        localStorage.setItem("token", data.token);
+
         router.push("/admin-home");
       } else {
         const error = await res.json();
