@@ -47,9 +47,9 @@ export default function AdminDashboard() {
       };
 
       const [adminRes, usersRes, messagesRes] = await Promise.all([
-        fetch("http://localhost:8000/admin_info", { headers }),
-        fetch("http://localhost:8000/users", { headers }),
-        fetch("http://localhost:8000/messages", { headers }),
+        fetch("http://localhost:8000/api/admin_info", { headers }),
+        fetch("http://localhost:8000/api/users", { headers }),
+        fetch("http://localhost:8000/api/messages", { headers }),
       ]);
 
       if (adminRes.ok && usersRes.ok && messagesRes.ok) {
