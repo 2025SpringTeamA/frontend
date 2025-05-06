@@ -67,7 +67,7 @@ export default function SabutyanMode() {
           </button>
         </form>
 
-        {/* 褒めてもらうボタン*/}
+        {/* 褒めてもらうボタン */}
         <div className="w-full max-w-md flex justify-end mt-2">
           <button className="tatami-button text-lg px-6 py-3" onClick={handleEnergy}>
           褒めてもらう
