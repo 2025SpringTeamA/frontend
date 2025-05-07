@@ -3,16 +3,9 @@
 import Logo from "@/components/Logo";
 import NavBar from "@/components/NavBar";
 import SearchBar from "@/components/SearchBar";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function ChatHistory() {
-  const [query, setQuery] = useState("");
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    // 検索処理をここに書く
-    console.log("検索クエリ:", query);
-  };
   useEffect(() => {
     document.body.classList.add("washitsu");
 
