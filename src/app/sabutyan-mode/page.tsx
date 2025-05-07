@@ -14,7 +14,7 @@ export default function SabutyanMode() {
   useEffect(() => {
     // ★ テスト用に session_id を強制的にセット
     localStorage.setItem("session_id", "1");
-    
+
     document.body.classList.add("washitsu");
 
     const storedToken = localStorage.getItem("token");
@@ -35,12 +35,18 @@ export default function SabutyanMode() {
     }
 
     try {
-      const res = await fetch(`/api/sessions/${sessionId}/messages`, {
+      const payload = {
+        session_id: Number(sessionId),
+        is_user: true,
+        content: diaryMessage,
+      };
+
+      const res = await fetch(`http://localhost:8000/api/sessions/${sessionId}/messages`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ content: diaryMessage }),
+        body: JSON.stringify(payload),
       });
 
       if (!res.ok) throw new Error("送信に失敗しました");
