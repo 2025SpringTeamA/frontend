@@ -6,11 +6,15 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function SabutyanMode() {
-  const [message, setMessage] = useState("");
+  const [diaryMessage, setDiaryMessage] = useState("");
+  const [cheerMessage, setCheerMessage] = useState("");
   const [token, setToken] = useState("");
   const [sessionId, setSessionId] = useState("");
 
   useEffect(() => {
+    // ★ テスト用に session_id を強制的にセット
+    localStorage.setItem("session_id", "1");
+    
     document.body.classList.add("washitsu");
 
     const storedToken = localStorage.getItem("token");
@@ -25,29 +29,8 @@ export default function SabutyanMode() {
   }, []);
 
   const handleEnergy = async () => {
-    try {
-      const res = await fetch("/api/energy", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ action: "元気をもらう" }),
-      });
-
-      if (!res.ok) throw new Error("送信に失敗しました");
-
-      const result = await res.json();
-      alert(result.message || "元気をもらいました！");
-    } catch {
-      alert("エラーが発生しました");
-    }
-  };
-
-  const handleMessageSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!token || !sessionId) {
-      alert("ログイン情報が不足しています");
+    if (!sessionId) {
+      alert("セッションIDが見つかりません");
       return;
     }
 
@@ -56,21 +39,17 @@ export default function SabutyanMode() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          content: message,
-        }),
+        body: JSON.stringify({ content: diaryMessage }),
       });
 
-      if (!res.ok) throw new Error("メッセージ送信に失敗しました");
+      if (!res.ok) throw new Error("送信に失敗しました");
 
       const result = await res.json();
-      alert("メッセージを送信しました！");
-      setMessage("");
+      alert(result.content || "元気をもらいました！");
     } catch (error) {
-      console.error(error);
-      alert("メッセージ送信中にエラーが発生しました");
+      console.error("エラー:", error);
+      alert("エラーが発生しました");
     }
   };
 
@@ -79,45 +58,35 @@ export default function SabutyanMode() {
       <Logo />
       <NavBar />
 
-      <main className="flex flex-col items-center justify-start min-h-screen gap-4 px-4 mt-2">
-        {/* 画像のみ表示（テキストなし） */}
-        <div className="flex justify-center">
-          <Image
-            src="/images/sabu1.png"
-            alt="さぶちゃん"
-            width={300}
-            height={200}
-            priority
-          />
+      <main className="washitsu min-h-screen px-4 py-6 space-y-6 flex flex-col items-center">
+        <Image src="/images/sabu1.png" alt="さぶちゃん" width={300} height={200} />
+
+        {/* 今日の日記 */}
+        <div className="bg-[#fff9eb] border-[4px] border-[#8d6e63] rounded-xl shadow-md p-6 w-full max-w-xl">
+          <h2 className="text-2xl font-bold mb-4">今日の日記</h2>
+          <textarea
+            className="w-full h-32 border border-gray-300 rounded-md p-3 bg-[#fffaf0]"
+            value={diaryMessage}
+            onChange={(e) => setDiaryMessage(e.target.value)}
+          ></textarea>
+          <div className="flex justify-end mt-4">
+            <button
+              className="bg-green-200 border-2 border-green-600 shadow-md px-6 py-2 rounded-md font-bold"
+              onClick={handleEnergy}
+            >
+              元気をもらう
+            </button>
+          </div>
         </div>
 
-        {/* メッセージ送信フォーム */}
-        <form
-          onSubmit={handleMessageSubmit}
-          className="fusuma-form text-lg md:text-xl"
-        >
-          <label htmlFor="message">メッセージ</label>
+        {/* さぶちゃんのエール */}
+        <div className="bg-[#fff9eb] border-[4px] border-[#8d6e63] rounded-xl shadow-md p-6 w-full max-w-xl">
+          <h2 className="text-2xl font-bold mb-4">さぶちゃんからの熱いエール</h2>
           <textarea
-            id="message"
-            className="h-32"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="メッセージを入力してください"
+            className="w-full h-32 border border-gray-300 rounded-md p-3 bg-[#fffaf0]"
+            value={cheerMessage}
+            onChange={(e) => setCheerMessage(e.target.value)}
           ></textarea>
-
-          <button type="submit" className="form-submit-button mt-4 text-lg">
-            メッセージを送る
-          </button>
-        </form>
-
-        {/* 元気をもらうボタン */}
-        <div className="w-full max-w-md flex justify-end mt-2">
-          <button
-            className="tatami-button text-lg px-6 py-3"
-            onClick={handleEnergy}
-          >
-            元気をもらう
-          </button>
         </div>
       </main>
     </>
