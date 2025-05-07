@@ -37,6 +37,10 @@ const Register: React.FC = () => {
       if (res.ok) {
         const data = await res.json();
         console.log("登録成功:", data);
+
+        // 🔑 トークン保存
+        localStorage.setItem("token", data.token);
+
         router.push("/home");
       } else {
         const error = await res.json();

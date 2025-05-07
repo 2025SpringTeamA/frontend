@@ -51,6 +51,12 @@ export default function AdminRegister(): JSX.Element {
       if (res.ok) {
         const data: RegisterResponse = await res.json();
         console.log("登録成功:", data);
+
+        // 🔑 トークン保存
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+        }
+
         router.push("/admin-home");
       } else {
         const error: ErrorResponse = await res.json();
