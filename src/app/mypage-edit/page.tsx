@@ -3,8 +3,17 @@
 import Link from "next/link";
 import { Button, Input } from "@headlessui/react";
 import Logo from "@/components/Logo";
+import { useEffect } from "react";
+import "@/styles/common.css";
 
 export default function MypageEdit() {
+  useEffect(() => {
+    document.body.classList.add("washitsu");
+
+    return () => {
+      document.body.classList.remove("washitsu");
+    };
+  }, []);
   return (
     <>
       <Logo />
