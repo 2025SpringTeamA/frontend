@@ -52,7 +52,9 @@ export default function SabutyanMode() {
       if (!res.ok) throw new Error("送信に失敗しました");
 
       const result = await res.json();
-      alert(result.content || "元気をもらいました！");
+
+      // ✅ 応答を cheerMessage にセット
+      setCheerMessage(result.content || "さぶちゃんから応援が届きました！");
     } catch (error) {
       console.error("エラー:", error);
       alert("エラーが発生しました");
@@ -85,14 +87,12 @@ export default function SabutyanMode() {
           </div>
         </div>
 
-        {/* さぶちゃんのエール */}
+        {/* さぶちゃんのエール（表示専用） */}
         <div className="bg-[#fff9eb] border-[4px] border-[#8d6e63] rounded-xl shadow-md p-6 w-full max-w-xl">
           <h2 className="text-2xl font-bold mb-4">さぶちゃんからの熱いエール</h2>
-          <textarea
-            className="w-full h-32 border border-gray-300 rounded-md p-3 bg-[#fffaf0]"
-            value={cheerMessage}
-            onChange={(e) => setCheerMessage(e.target.value)}
-          ></textarea>
+          <div className="w-full h-32 border border-gray-300 rounded-md p-3 bg-[#fffaf0] whitespace-pre-wrap overflow-y-auto">
+            {cheerMessage || "ここにさぶちゃんの応援が表示されます"}
+          </div>
         </div>
       </main>
     </>
