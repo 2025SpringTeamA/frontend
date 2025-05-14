@@ -68,6 +68,42 @@ export default function Home() {
       body: JSON.stringify({ username, password }),
     });
   };
+  const handleDeleteClick = () => {
+    const confirmed = window.confirm("本当に削除してもよろしいですか？");
+    if (confirmed) {
+      // ユーザーアカウントを削除するAPIリクエスト
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("ログインが必要です");
+        return;
+      }
+
+      fetch("http://localhost:8000/api/user/delete", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("削除に失敗しました");
+        })
+        .then((data) => {
+          alert(data.message || "アカウントを完全に削除しました");
+          // トークンを削除してログアウト状態にする
+          localStorage.removeItem("token");
+          // ホームページに遷移
+          window.location.href = "/";
+        })
+        .catch((error) => {
+          console.error("エラー:", error);
+          alert("アカウントの削除に失敗しました");
+        });
+    }
+  };
   return (
     <>
       <Logo />
