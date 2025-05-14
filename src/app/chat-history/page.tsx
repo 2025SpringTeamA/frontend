@@ -16,12 +16,12 @@ export default function ChatHistory() {
   return (
     <>
       <Logo />
+      <NavBar />
       <div className="flex items-center justify-center">
         <div className="w-full max-w-md p-4 rounded-lg">
           <h1 className="kakejiku">チャット履歴</h1>
         </div>
       </div>
-      <NavBar />
       <SearchBar />
     </>
   );
