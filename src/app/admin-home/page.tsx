@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import "../../styles/common.css";
 
 // 管理者情報の型
 type AdminInfo = {
+  user_name: string;
   email: string;
 };
 
@@ -24,6 +26,7 @@ type Message = {
 
 export default function AdminDashboard() {
   const [adminEmail, setAdminEmail] = useState<string>("");
+  const [adminName, setAdminName] = useState<string>("");
   const [userCount, setUserCount] = useState<number>(0);
   const [inactiveCount, setInactiveCount] = useState<number>(0);
   const [messageCount, setMessageCount] = useState<number>(0);
@@ -56,16 +59,20 @@ export default function AdminDashboard() {
         const admin: AdminInfo = await adminRes.json();
         const users: User[] = await usersRes.json();
         const messages: Message[] = await messagesRes.json();
+        console.log(admin);
+        console.log(users);
+        console.log("messages", messages);
 
         setAdminEmail(admin.email);
+        setAdminName(admin.user_name);
         setUserCount(users.length);
         setInactiveCount(users.filter((u) => !u.is_active).length);
         setMessageCount(messages.length);
       } else {
-        alert("情報の取得に失敗しました。再ログインしてください。");
+        toast.error("情報の取得に失敗しました。再ログインしてください。");
       }
     } catch (error: unknown) {
-      alert("通信エラーが発生しました");
+      toast.error("通信エラーが発生しました");
     }
   };
 
@@ -98,7 +105,7 @@ export default function AdminDashboard() {
           </Link>
         </div>
 
-        <p className="mb-6">こんにちは、{adminEmail} さん！</p>
+        <p className="mb-6">こんにちは、{adminName} さん！</p>
 
         <div className="bg-gray-100 p-4 rounded shadow-md mb-6">
           <h2 className="font-bold mb-2">概要</h2>

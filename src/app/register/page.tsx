@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import Link from "next/link";
 import "../../styles/common.css"; // 共通CSSを読み込み
 
@@ -44,10 +45,10 @@ const Register: React.FC = () => {
         router.push("/home");
       } else {
         const error = await res.json();
-        alert(error.detail || "登録に失敗しました");
+        toast.error(error.detail || "登録に失敗しました");
       }
     } catch {
-      alert("通信エラーが発生しました");
+      toast.error("通信エラーが発生しました");
     }
   };
 

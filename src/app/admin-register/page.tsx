@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { toast } from "sonner";
 import "../../styles/common.css";
 
 // サーバーからの成功レスポンス型（必要に応じて拡張）
@@ -60,7 +61,7 @@ export default function AdminRegister(): JSX.Element {
         router.push("/admin-home");
       } else {
         const error: ErrorResponse = await res.json();
-        alert(error.detail || "登録に失敗しました");
+        toast.error(error.detail || "登録に失敗しました")
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -68,7 +69,7 @@ export default function AdminRegister(): JSX.Element {
       } else {
         console.error("未知のエラー:", err);
       }
-      alert("通信エラーが発生しました");
+      toast.error("通信エラーが発生しました");
     }
   };
 
