@@ -24,7 +24,16 @@ export default function PostListPage() {
 
   const fetchMessages = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/messages");
+      const token = localStorage.getItem("token");
+      const res = await fetch("http://localhost:8000/api/messages",{
+        headers :{
+          Authorization: `Bearer ${token}`,
+        }
+      });
+
+      if (!res.ok) {
+        throw new Error("認証エラー or APIエラー");
+      }
       const data = await res.json();
       setMessages(data);
     } catch (error) {
@@ -42,7 +51,7 @@ export default function PostListPage() {
         <div className="flex flex-col gap-4">
           <Link href="/admin-home/admin-users" className="top-button text-center">ユーザー管理</Link>
           <Link href="/admin-home/admin-posts" className="top-button text-center">投稿内容の一覧</Link>
-          <Link href="/admin-home/admin-settings" className="top-button text-center">設定変更</Link>
+          {/* <Link href="#" className="top-button text-center">設定変更</Link> */}
         </div>
       </aside>
 
@@ -65,15 +74,15 @@ export default function PostListPage() {
             </thead>
             <tbody>
               {messages.length > 0 ? (
-                messages.map((msg) => (
-                  <tr key={msg.id}>
-                    <td className="p-2 border">{msg.user?.user_name || "匿名"}</td>
+                messages.map((msg, i) => (
+                  <tr key={i}>
+                    <td className="p-2 border">{msg.user_name || "匿名"}</td>
                     <td className="p-2 border">{msg.content}</td>
                     <td className="p-2 border">{new Date(msg.created_at).toLocaleDateString()}</td>
                   </tr>
                 ))
               ) : (
-                <tr>
+                <tr key="no-messages">
                   <td colSpan={3} className="p-2 border text-center text-gray-500">
                     投稿がまだありません。
                   </td>

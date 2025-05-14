@@ -122,7 +122,7 @@ export default function UserManagement() {
         <div className="flex flex-col gap-4">
           <Link href="/admin-home/admin-users" className="top-button text-center">ユーザー管理</Link>
           <Link href="/admin-home/admin-posts" className="top-button text-center">投稿内容の一覧</Link>
-          <button className="top-button">設定変更</button>
+          {/* <button className="top-button ">設定変更</button> */}
         </div>
       </aside>
 
@@ -158,7 +158,7 @@ export default function UserManagement() {
                     ) : (
                       <button onClick={() => handleActivate(user.id)} className="text-green-600 hover:underline">復活</button>
                     )}
-                    <button onClick={() => confirmDelete(user.id)} className="text-red-600 hover:underline">削除</button>
+                    <button onClick={() => confirmDelete(user.id)(user.id)} className="text-red-600 hover:underline">削除</button>
                   </td>
                 </tr>
               ))}
