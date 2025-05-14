@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { toast } from "sonner";
 import "../../../styles/common.css";
 
 interface User {
@@ -16,6 +17,8 @@ export default function UserManagement() {
   const [editUser, setEditUser] = useState<User | null>(null);
   const [editName, setEditName] = useState("");
   const [editEmail, setEditEmail] = useState("");
+  const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
+
 
   useEffect(() => {
     document.body.classList.add("washitsu");
@@ -37,7 +40,7 @@ export default function UserManagement() {
       const data = await res.json();
       setUsers(data);
     } catch (err) {
-      alert("ユーザー一覧の取得に失敗しました。");
+      toast.error("ユーザー一覧の取得に失敗しました。");
     }
   };
 
@@ -61,7 +64,7 @@ export default function UserManagement() {
       setEditUser(null);
       fetchUsers();
     } catch {
-      alert("ユーザーの更新に失敗しました。");
+      toast.error("ユーザーの更新に失敗しました。");
     }
   };
 
@@ -83,13 +86,30 @@ export default function UserManagement() {
     fetchUsers();
   };
 
-  const handleDelete = async (id: number) => {
-    if (!confirm("本当に削除しますか？")) return;
+  // const handleDelete = async (id: number) => {
+  //   if (!confirm("本当に削除しますか？")) return;
+  //   const token = localStorage.getItem("token");
+  //   await fetch(`http://localhost:8000/api/users/${id}`, {
+  //     method: "DELETE",
+  //     headers: { Authorization: `Bearer ${token}` },
+  //   });
+  //   fetchUsers();
+  // };
+
+  // 削除ボタンクリック時にモーダル表示
+  const confirmDelete = (id: number) => {
+    setDeleteTargetId(id);
+  };
+
+  // 削除実行
+  const handleConfirmedDelete = async () => {
+    if (deleteTargetId === null) return;
     const token = localStorage.getItem("token");
-    await fetch(`http://localhost:8000/api/users/${id}`, {
+    await fetch(`http://localhost:8000/api/users/${deleteTargetId}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
+    setDeleteTargetId(null);
     fetchUsers();
   };
 
@@ -138,7 +158,7 @@ export default function UserManagement() {
                     ) : (
                       <button onClick={() => handleActivate(user.id)} className="text-green-600 hover:underline">復活</button>
                     )}
-                    <button onClick={() => handleDelete(user.id)} className="text-red-600 hover:underline">削除</button>
+                    <button onClick={() => confirmDelete(user.id)} className="text-red-600 hover:underline">削除</button>
                   </td>
                 </tr>
               ))}
@@ -178,6 +198,31 @@ export default function UserManagement() {
           className="w-[400px] h-auto absolute bottom-4 right-4 rounded z-0 opacity-30"
         />
       </section>
+
+
+      {/* 削除確認モーダル */}
+      {deleteTargetId !== null && (
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="bg-white rounded-lg shadow-lg p-6 w-80">
+          <h2 className="text-lg font-semibold mb-4">削除の確認</h2>
+          <p className="mb-6">本当にこのユーザーを削除してもよろしいですか？</p>
+          <div className="flex justify-end space-x-4">
+            <button
+              className="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded"
+              onClick={() => setDeleteTargetId(null)}
+            >
+              キャンセル
+            </button>
+            <button
+              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded"
+              onClick={handleConfirmedDelete}
+            >
+              削除する
+            </button>
+          </div>
+        </div>
+      </div>
+      )}
     </main>
   );
 }

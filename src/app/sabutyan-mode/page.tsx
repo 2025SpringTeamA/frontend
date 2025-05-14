@@ -1,8 +1,8 @@
 "use client";
 
-import Logo from "@/components/Logo";
-import NavBar from "@/components/NavBar";
+import Header from "@/components/Header";
 import Image from "next/image";
+import { toast } from "sonner";
 import { useEffect, useState } from "react";
 
 export default function SabutyanMode() {
@@ -30,7 +30,7 @@ export default function SabutyanMode() {
 
   const handleEnergy = async () => {
     if (!sessionId) {
-      alert("セッションIDが見つかりません");
+      toast.error("セッションIDが見つかりません");
       return;
     }
 
@@ -57,14 +57,13 @@ export default function SabutyanMode() {
       setCheerMessage(result.content || "さぶちゃんから応援が届きました！");
     } catch (error) {
       console.error("エラー:", error);
-      alert("エラーが発生しました");
+      toast.error("エラーが発生しました");
     }
   };
 
   return (
     <>
-      <Logo />
-      <NavBar />
+      <Header/>
 
       <main className="washitsu min-h-screen px-4 py-6 space-y-6 flex flex-col items-center">
         <Image src="/images/sabu1.png" alt="さぶちゃん" width={300} height={200} />

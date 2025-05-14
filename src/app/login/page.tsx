@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import Link from "next/link";
 import "../../styles/common.css";
 
@@ -41,10 +42,10 @@ export default function Login() {
         router.push("/home");
       } else {
         const error = await res.json();
-        alert(error.detail || "ログインに失敗しました");
+        toast.error(error.detail || "ログインに失敗しました");
       }
     } catch {
-      alert("通信エラーが発生しました");
+      toast.error("通信エラーが発生しました");
     }
   };
 
@@ -55,7 +56,7 @@ export default function Login() {
 
   const handleAdminLogin = async () => {
     try {
-      const res = await fetch("http://localhost:8000/admin/login", {
+      const res = await fetch("http://localhost:8000/api/admin/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,10 +74,10 @@ export default function Login() {
         router.push("/admin-home");
       } else {
         const error = await res.json();
-        alert(error.detail || "管理者ログインに失敗しました");
+        toast.error(error.detail || "管理者ログインに失敗しました");
       }
     } catch {
-      alert("通信エラーが発生しました");
+      toast.error("通信エラーが発生しました");
     }
   };
 

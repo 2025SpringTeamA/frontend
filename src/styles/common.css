@@ -1,6 +1,7 @@
 /* Google Fonts を読み込む場合（HTMLに追加） */
 /* <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&display=swap" rel="stylesheet"> */
 
+
 /* 和室風デザイン共通CSS */
 
 body.washitsu {
@@ -14,12 +15,18 @@ body.washitsu {
     #b0c59a 8px
   );
   font-family: "M PLUS Rounded 1c", "Yu Mincho", "Hiragino Mincho ProN", serif;
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+  justify-content: center; */
+  /* min-height: 100vh; */
 }
+
+header {
+  margin-bottom: 70px;
+  width: 100%;
+}
+
 
 /* 掛け軸風タイトル */
 .kakejiku {
@@ -191,9 +198,9 @@ input,
 textarea,
 button,
 label,
-h1, h2, h3, h4, h5, h6,
-a {
-  color: #2d2d2d !important; /* 明るすぎない柔らかい黒 */
+h1, h2, h3, h4, h5, h6
+{
+  color: #2d2d2d;
 }
 
 /* Chromeなどの自動補完で文字が白くなる問題を解決 */

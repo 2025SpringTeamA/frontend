@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from 'sonner';
 import "./globals.css";
 import "../styles/common.css"; // ← 追加：和室用CSS（必要に応じて）
 
@@ -23,6 +24,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="ja">
       <head>
@@ -33,9 +35,11 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`washitsu ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        {/* ✅ トースト表示コンポーネント */}
+        <Toaster richColors position="top-center" />
+        <main>{children}</main>
       </body>
     </html>
   );
