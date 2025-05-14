@@ -1,7 +1,8 @@
 "use client";
 
-import Header from "@/components/Header";
+
 import { Button, Input } from "@headlessui/react";
+import Header from "@/components/Header";
 
 import { useEffect, useState } from "react";
 import "@/styles/common.css";
@@ -105,13 +106,10 @@ export default function Home() {
   };
   return (
     <>
-      <Logo />
-      <NavBar />
+      <Header />
       <main className="flex flex-col items-center justify-center min-h-screen p-8 gap-4">
         <h1 className="kakejiku">マイページ</h1>
 
-      <Header/>
-      <main className="flex flex-col items-center justify-center">
         <form className="fusuma-form">
           <label htmlFor="username" className="font-semibold">
             ユーザ名
