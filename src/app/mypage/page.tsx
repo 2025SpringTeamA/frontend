@@ -48,12 +48,12 @@ export default function Home() {
         </form>
 
         <div className="flex space-x-4">
-          <Link
-            href="/mypage-edit"
-            className="bg-gray-200 text-black px-4 py-2 rounded hover:bg-gray-300 text-center"
+          <Button
+            className="bg-gray-200 text-black px-4 py-2 rounded hover:bg-gray-300"
+            onClick={handleChangeClick}
           >
             変更
-          </Link>
+          </Button>
 
           <Button
             className="bg-gray-200 text-black px-4 py-2 rounded hover:bg-gray-300"
