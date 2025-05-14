@@ -1,6 +1,6 @@
 "use client";
 
-
+import { toast } from "sonner";
 import { Button, Input } from "@headlessui/react";
 import Header from "@/components/Header";
 
@@ -9,7 +9,9 @@ import "@/styles/common.css";
 
 export default function Home() {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
 
   useEffect(() => {
     document.body.classList.add("washitsu");
@@ -27,7 +29,8 @@ export default function Home() {
 
           if (response.ok) {
             const userData = await response.json();
-            setUsername(userData.username || "");
+            setUsername(userData.user_name || "");
+            setEmail(userData.email || "");
           }
         } catch (error) {
           console.error("ユーザー情報の取得に失敗しました", error);
@@ -46,17 +49,21 @@ export default function Home() {
     setUsername(e.target.value);
   };
 
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
   const handleChangeClick = () => {
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("ログインが必要です");
+      toast.info("ログインが必要です");
       return;
     }
-    if (!username || !password) {
-      alert("ユーザ名とパスワードを入力してください");
+    if (!username && !password && !email) {
+      toast.info("ユーザ名またはメールアドレスまたはパスワードを入力してください");
       return;
     }
     fetch("http://localhost:8000/api/user/", {
@@ -65,8 +72,20 @@ export default function Home() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ username, password }),
-    });
+      body: JSON.stringify({ user_name: username  , email ,password }),
+    }).then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("更新に失敗しました");
+        })
+        .then((data) => {
+          toast.success(data.message || "アカウントを更新しました");
+        })
+        .catch((error) => {
+          console.error("エラー:", error);
+          toast.error("アカウントの更新に失敗しました");
+        });
   };
   const handleDeleteClick = () => {
     const confirmed = window.confirm("本当に削除してもよろしいですか？");
@@ -74,7 +93,7 @@ export default function Home() {
       // ユーザーアカウントを削除するAPIリクエスト
       const token = localStorage.getItem("token");
       if (!token) {
-        alert("ログインが必要です");
+        toast.info("ログインが必要です");
         return;
       }
 
@@ -92,15 +111,15 @@ export default function Home() {
           throw new Error("削除に失敗しました");
         })
         .then((data) => {
-          alert(data.message || "アカウントを完全に削除しました");
+          toast.success(data.message || "アカウントを完全に削除しました");
           // トークンを削除してログアウト状態にする
           localStorage.removeItem("token");
           // ホームページに遷移
           window.location.href = "/";
         })
         .catch((error) => {
-          console.error("エラー:", error);
-          alert("アカウントの削除に失敗しました");
+          // console.error("エラー:", error);
+          toast.error("アカウントの削除に失敗しました");
         });
     }
   };
@@ -122,6 +141,19 @@ export default function Home() {
             value={username}
             onChange={handleUsernameChange}
           />
+
+          <label htmlFor="email" className="font-semibold">
+            メールアドレス
+          </label>
+          <Input
+            type="email"
+            placeholder="sample@example.com"
+            name="email"
+            className="bg-white border px-3 py-2 rounded"
+            value={email}
+            onChange={handleEmailChange}
+          />
+
           <label htmlFor="password" className="font-semibold">
             パスワード
           </label>
