@@ -3,11 +3,13 @@
 import Header from "@/components/Header";
 import SearchBar from "@/components/SearchBar";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
+import { Trash } from "lucide-react";
 import { toast } from "sonner";
 
+
 type SessionSummary = {
-  id: number;
+  session_id: number;
   first_message: string;
   created_at: string;
   character_mode: string;
@@ -25,7 +27,7 @@ export default function ChatHistory() {
   const [sessions, setSessions] = useState<SessionSummary[]>([]);
   const [keyword, setKeyword] = useState("");
   const [favoriteOnly, setFavoriteOnly] = useState(false);
-  const router = useRouter();
+  // const router = useRouter();
 
   useEffect(() => {
     document.body.classList.add("washitsu");
@@ -91,6 +93,28 @@ export default function ChatHistory() {
   };
 
 
+  // 削除処理
+  const handleDelete = async(sessionId: number) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`http://localhost:8000/api/sessions/${sessionId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if(res.ok){
+        setSessions(sessions.filter((s)=> s.session_id !== sessionId));
+        toast.success("日記を削除しました");
+      }else{
+        toast.error("削除に失敗しました");
+      }
+    }catch (error){
+      console.error("通信エラー:", error);
+      toast.error("通信エラーが発生しました");
+    }
+  }
 
   return (
     <>
@@ -121,10 +145,11 @@ export default function ChatHistory() {
         <table className="table-auto border-collapse w-full">
           <thead className="sticky top-0 z-10">
             <tr className="bg-gray-200">
-              <th className="border px-4 py-2">日付</th>
-              <th className="border px-4 py-2">内容</th>
-              <th className="border px-4 py-2">キャラ</th>
-              <th className="border px-4 py-2">お気に入り</th>
+              <th className="border px-4 py-2">🗓 日付</th>
+              <th className="border px-4 py-2">📄 内容</th>
+              <th className="border px-4 py-2">🧑‍🎤 キャラ</th>
+              <th className="border px-4 py-2">⭐ お気に入り</th>
+              <th className="border px-4 py-2">🗑️ 削除</th>
             </tr>
           </thead>
           <tbody>
@@ -135,8 +160,14 @@ export default function ChatHistory() {
                 <td className="bg-slate-100 border px-4 py-2">{getCharacterName(session.character_mode)}</td>
                 <td className="bg-slate-100 border px-4 py-2 text-center">
                   <button onClick={() => handleToggleFavorite(session.session_id, i)}
-                    className="text-2xl transition-transform duration-300 hover:scale-125">
+                    className="text-2xl transition-transform duration-300 hover:scale-125 text-green-700">
                     {session.is_favorite ? "★" : "☆"}
+                  </button>
+                </td>
+                <td className="bg-slate-100 border px-4 py-2 text-center">
+                  <button onClick={() => handleDelete(session.session_id)}
+                  className="hover:scale-110 hover:text-red-600 transition">
+                    <Trash size={20}/>
                   </button>
                 </td>
               </tr>

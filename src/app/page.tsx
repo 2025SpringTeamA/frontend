@@ -13,7 +13,7 @@ const Home: React.FC = () => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/`)
       .then((res) => res.json())
       .then((data: { message: string }) => setMessage(data.message))
-      .catch(() => setMessage("Error fetching message from FastAPI."));
+      .catch(() => setMessage(""));
     return () => {
       document.body.classList.remove("washitsu");
     };

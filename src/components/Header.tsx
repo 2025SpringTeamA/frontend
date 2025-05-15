@@ -13,7 +13,7 @@ export default function Header() {
 
     const navItems = [
         { label: 'ホーム', href: '/home' },
-        { label: 'チャット履歴', href: '/chat-history' },
+        { label: '履歴', href: '/chat-history' },
         { label: 'マイページ', href: '/mypage' },
     ];
 
@@ -94,7 +94,7 @@ export default function Header() {
                 <div className="hidden md:block">
                     <button
                         onClick={handleLogout}
-                        className="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition-colors">
+                        className="bg-green-500 hover:bg-green-600 text-[#2d2d2d] font-medium py-2 px-4 rounded-lg transition-colors">
                         ログアウト
                     </button>
                 </div>
@@ -126,22 +126,3 @@ export default function Header() {
         </header>
     );
 }
-
-/**
- * 使用例: pages/_app.js もしくは Layout コンポーネントにて
- *
- * import Header from 'components/Header';
- *
- * function MyApp({ Component, pageProps }) {
- *   return (
- *     <>
- *       <Header />
- *       <main className="bg-gray-100 min-h-screen">
- *         <Component {...pageProps} />
- *       </main>
- *     </>
- *   );
- * }
- *
- * export default MyApp;
- */

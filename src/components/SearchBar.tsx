@@ -30,7 +30,7 @@ export default function SearchBar({onSearch}:Props) {
       />
       <Button
         type="submit"
-        className="px-4 py-2 text-white bg-green-500 rounded-r-md hover:bg-green-500"
+        className="px-4 py-2 text-[#2d2d2d] bg-green-500 rounded-r-md hover:bg-green-500"
       >
         検索
       </Button>
