@@ -18,7 +18,7 @@ export default function NavBar() {
                 href="/chat-history"
                 className="text-white hover:text-gray-300"
               >
-                チャット履歴
+                履歴
               </Link>
             </li>
             <li>
