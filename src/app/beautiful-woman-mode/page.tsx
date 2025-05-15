@@ -10,9 +10,10 @@ export default function BijyoMode() {
   const [cheerMessage, setCheerMessage] = useState("");
   const [token, setToken] = useState("");
   const [sessionId, setSessionId] = useState("");
+  const [showMom, setShowMom] = useState(false);
 
   useEffect(() => {
-    // ★ テスト用に session_id を強制的にセット
+    // テスト用に session_id を強制的にセット
     localStorage.setItem("session_id", "1");
 
     document.body.classList.add("washitsu");
@@ -22,6 +23,21 @@ export default function BijyoMode() {
 
     if (storedToken) setToken(storedToken);
     if (storedSessionId) setSessionId(storedSessionId);
+
+    // 5回に1回だけ怒ったお母さん画像と音声を表示
+    const chance = Math.floor(Math.random() * 5);
+    if (chance === 0) {
+      setShowMom(true);
+
+      // 音声を再生
+      const audio = new Audio("/sounds/angry-voice.mp3");
+      audio.play().catch((err) => {
+        console.warn("音声の自動再生がブロックされました", err);
+      });
+
+      // 3秒後に非表示
+      setTimeout(() => setShowMom(false), 3000);
+    }
 
     return () => {
       document.body.classList.remove("washitsu");
@@ -52,17 +68,28 @@ export default function BijyoMode() {
       if (!res.ok) throw new Error("送信に失敗しました");
 
       const result = await res.json();
-
-      // ✅ 応答を cheerMessage にセット
       setCheerMessage(result.content || "美女から応援が届きました！");
     } catch (error) {
       console.error("エラー:", error);
-      toast.error("エラーが発生しました")
+      toast.error("エラーが発生しました");
     }
   };
 
   return (
     <>
+      {/* 怒ったお母さんの画像と音声（5回に1回、3秒表示） */}
+      {showMom && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-80 flex justify-center items-center">
+          <Image
+            src="/images/mom-ang-removebg.png"
+            alt="怒ったお母さん"
+            width={600}
+            height={600}
+            className="animate-pulse"
+          />
+        </div>
+      )}
+
       <Header />
       <main className="washitsu min-h-screen px-4 py-6 space-y-6 flex flex-col items-center">
         <Image src="/images/home.png" alt="美女" width={300} height={200} />
