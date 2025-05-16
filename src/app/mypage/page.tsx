@@ -11,7 +11,7 @@ export default function Home() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+  const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
 
   useEffect(() => {
     document.body.classList.add("washitsu");
@@ -63,7 +63,9 @@ export default function Home() {
       return;
     }
     if (!username && !password && !email) {
-      toast.info("ユーザ名またはメールアドレスまたはパスワードを入力してください");
+      toast.info(
+        "ユーザ名またはメールアドレスまたはパスワードを入力してください"
+      );
       return;
     }
     fetch("http://localhost:8000/api/user/", {
@@ -72,56 +74,55 @@ export default function Home() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ user_name: username  , email ,password }),
-    }).then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw new Error("更新に失敗しました");
-        })
-        .then((data) => {
-          toast.success(data.message || "アカウントを更新しました");
-        })
-        .catch((error) => {
-          console.error("エラー:", error);
-          toast.error("アカウントの更新に失敗しました");
-        });
-  };
-  const handleDeleteClick = () => {
-    const confirmed = window.confirm("本当に削除してもよろしいですか？");
-    if (confirmed) {
-      // ユーザーアカウントを削除するAPIリクエスト
-      const token = localStorage.getItem("token");
-      if (!token) {
-        toast.info("ログインが必要です");
-        return;
-      }
-
-      fetch("http://localhost:8000/api/user/delete", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+      body: JSON.stringify({ user_name: username, email, password }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("更新に失敗しました");
       })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw new Error("削除に失敗しました");
-        })
-        .then((data) => {
-          toast.success(data.message || "アカウントを完全に削除しました");
-          // トークンを削除してログアウト状態にする
-          localStorage.removeItem("token");
-          // ホームページに遷移
-          window.location.href = "/";
-        })
-        .catch((error) => {
-          // console.error("エラー:", error);
-          toast.error("アカウントの削除に失敗しました");
-        });
+      .then((data) => {
+        toast.success(data.message || "アカウントを更新しました");
+      })
+      .catch((error) => {
+        console.error("エラー:", error);
+        toast.error("アカウントの更新に失敗しました");
+      });
+  };
+
+  const handleDeleteClick = () => {
+    // ユーザーアカウントを削除するAPIリクエスト
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.info("ログインが必要です");
+      return;
     }
+
+    fetch("http://localhost:8000/api/user/delete", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("削除に失敗しました");
+      })
+      .then((data) => {
+        toast.success(data.message || "アカウントを完全に削除しました");
+        // トークンを削除してログアウト状態にする
+        localStorage.removeItem("token");
+        // ホームページに遷移
+        window.location.href = "/";
+      })
+      .catch((error) => {
+        // console.error("エラー:", error);
+        toast.error("アカウントの削除に失敗しました");
+      });
   };
   return (
     <>
@@ -177,11 +178,36 @@ export default function Home() {
 
           <Button
             className="bg-gray-200 text-black px-4 py-2 rounded hover:bg-gray-300"
-            onClick={handleDeleteClick}
+            onClick={() => setDeleteTargetId(0)}
           >
             削除
           </Button>
         </div>
+        {/* 削除確認モーダル */}
+        {deleteTargetId !== null && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-white rounded-lg shadow-lg p-6 w-80">
+              <h2 className="text-lg font-semibold mb-4">削除の確認</h2>
+              <p className="mb-6">
+                本当にこのユーザーを削除してもよろしいですか？
+              </p>
+              <div className="flex justify-end space-x-4">
+                <Button
+                  className="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded"
+                  onClick={() => setDeleteTargetId(null)}
+                >
+                  キャンセル
+                </Button>
+                <Button
+                  className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded"
+                  onClick={handleDeleteClick}
+                >
+                  削除する
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
     </>
   );
