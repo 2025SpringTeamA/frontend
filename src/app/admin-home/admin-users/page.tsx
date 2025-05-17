@@ -158,7 +158,7 @@ export default function UserManagement() {
                     ) : (
                       <button onClick={() => handleActivate(user.id)} className="text-green-600 hover:underline">復活</button>
                     )}
-                    <button onClick={() => confirmDelete(user.id)(user.id)} className="text-red-600 hover:underline">削除</button>
+                    <button onClick={() => confirmDelete(user.id)} className="text-red-600 hover:underline">削除</button>
                   </td>
                 </tr>
               ))}

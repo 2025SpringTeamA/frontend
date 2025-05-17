@@ -127,7 +127,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="flex flex-col items-center justify-center min-h-screen p-8 gap-4">
+      <main className="flex flex-col items-center justify-center p-8 gap-4">
         <h1 className="kakejiku">マイページ</h1>
 
         <form className="fusuma-form">
@@ -170,14 +170,14 @@ export default function Home() {
 
         <div className="flex space-x-4">
           <Button
-            className="bg-gray-200 text-black px-4 py-2 rounded hover:bg-gray-300"
+            className="button-back"
             onClick={handleChangeClick}
           >
             変更
           </Button>
 
           <Button
-            className="bg-gray-200 text-black px-4 py-2 rounded hover:bg-gray-300"
+            className="bg-red-100 text-red-600 px-7 py-2 border-2 border-red-900 rounded-lg hover:bg-red-200 transition-colors duration-200"
             onClick={() => setDeleteTargetId(0)}
           >
             削除
