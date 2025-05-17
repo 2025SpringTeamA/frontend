@@ -3,12 +3,12 @@
 import Header from '@/components/Header';
 import Image from "next/image";
 import { toast } from "sonner";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
-  const token = localStorage.getItem("token");
+  const [token, setToken] = useState<string | null>(null);
 
   const startSession = async (characterMode: "saburo" | "bijyo") => {
     try {
@@ -19,12 +19,15 @@ export default function Home() {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          user_id: 1,
           character_mode: characterMode,
         }),
       });
 
       if(res.ok){
+        const data = await res.json();
+        const id = data.id
+        localStorage.setItem("session_id", id.toString());
+        
         if (characterMode==="saburo"){
           router.push("/sabutyan-mode");
         }else {
@@ -32,16 +35,25 @@ export default function Home() {
         }
       }else {
         const data = await res.json();
+        let message = "エラーが発生しました";
+        if(Array.isArray(data.detail)){
+          message=data.detail.map((d:any)=>d.msg).join("/");
+        }else if(typeof data.detail=== 'string'){
+          message=data.detail
+        }
         // トースト通知
-        toast.info(data.detail || "日記");
+        toast.info(message);
       }
     } catch (err){
       console.log(err); // 開発用
-      toast.console.error("通信エラーが発生しました");
+      toast.error("通信エラーが発生しました");
     }
   };
 
   useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    setToken(storedToken);
+    
     document.body.classList.add("washitsu");
     return () => {
       document.body.classList.remove("washitsu");

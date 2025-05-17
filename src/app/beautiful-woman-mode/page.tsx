@@ -13,9 +13,6 @@ export default function BijyoMode() {
   const [showMom, setShowMom] = useState(false);
 
   useEffect(() => {
-    // テスト用に session_id を強制的にセット
-    localStorage.setItem("session_id", "1");
-
     document.body.classList.add("washitsu");
 
     const storedToken = localStorage.getItem("token");
@@ -61,6 +58,7 @@ export default function BijyoMode() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(payload),
       });

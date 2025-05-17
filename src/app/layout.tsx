@@ -4,6 +4,7 @@ import { Toaster } from 'sonner';
 import "./globals.css";
 import "../styles/common.css"; // ← 追加：和室用CSS（必要に応じて）
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
