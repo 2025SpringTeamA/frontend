@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: "さぶちゃん日記",
   description: "日記アプリ",
   icons: {
-    icon: "/favicon.png", // public/favicon.png
+    icon: "/images/sabuchan.png", // public/
   },
 };
 
