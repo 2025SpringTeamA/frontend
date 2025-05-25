@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from 'next/image';
 import "../../../styles/common.css";
 
 interface Message {
@@ -93,7 +94,7 @@ export default function PostListPage() {
         </div>
 
         {/* アニメーションロゴ */}
-        <img
+        <Image
           src="/images/sabuchan_logo.png"
           alt="さぶちゃん日記"
           className="w-[400px] h-auto absolute bottom-4 right-4 rounded z-0 opacity-30"

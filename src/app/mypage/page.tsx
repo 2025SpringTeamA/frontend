@@ -119,7 +119,8 @@ export default function Home() {
         // ホームページに遷移
         window.location.href = "/";
       })
-      .catch((_) => {
+      .catch((e) => {
+        console.error(e);
         toast.error("アカウントの削除に失敗しました");
       });
   };
