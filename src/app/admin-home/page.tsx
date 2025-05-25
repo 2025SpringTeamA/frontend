@@ -25,12 +25,11 @@ type Message = {
 };
 
 export default function AdminDashboard() {
-  const [adminEmail, setAdminEmail] = useState<string>("");
+  const [_, setAdminEmail] = useState<string>("");
   const [adminName, setAdminName] = useState<string>("");
   const [userCount, setUserCount] = useState<number>(0);
   const [inactiveCount, setInactiveCount] = useState<number>(0);
   const [messageCount, setMessageCount] = useState<number>(0);
-  const router = useRouter();
 
   useEffect(() => {
     document.body.classList.add("washitsu");
@@ -71,7 +70,7 @@ export default function AdminDashboard() {
       } else {
         toast.error("情報の取得に失敗しました。再ログインしてください。");
       }
-    } catch (error: unknown) {
+    } catch (_) {
       toast.error("通信エラーが発生しました");
     }
   };

@@ -79,7 +79,7 @@ export default function BijyoMode() {
       {showMom && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-80 flex justify-center items-center">
           <Image
-            src="/images/mom-ang-removebg.png"
+            src="/images/angry_mom.png"
             alt="怒ったお母さん"
             width={600}
             height={600}
@@ -90,7 +90,7 @@ export default function BijyoMode() {
 
       <Header />
       <main className="washitsu min-h-screen px-4 py-6 space-y-6 flex flex-col items-center">
-        <Image src="/images/home.png" alt="美女" width={300} height={200} />
+        <Image src="/images/diary-bijyo.png" alt="美女" width={300} height={200} />
 
         {/* 今日のつぶやき */}
         <div className="bg-[#fff0f5] border-[4px] border-[#d48fb1] rounded-xl shadow-md p-6 w-full max-w-xl">

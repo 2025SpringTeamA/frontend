@@ -39,7 +39,7 @@ export default function UserManagement() {
       if (!res.ok) throw new Error("ユーザー取得に失敗");
       const data = await res.json();
       setUsers(data);
-    } catch (err) {
+    } catch (_) {
       toast.error("ユーザー一覧の取得に失敗しました。");
     }
   };
@@ -86,15 +86,6 @@ export default function UserManagement() {
     fetchUsers();
   };
 
-  // const handleDelete = async (id: number) => {
-  //   if (!confirm("本当に削除しますか？")) return;
-  //   const token = localStorage.getItem("token");
-  //   await fetch(`http://localhost:8000/api/users/${id}`, {
-  //     method: "DELETE",
-  //     headers: { Authorization: `Bearer ${token}` },
-  //   });
-  //   fetchUsers();
-  // };
 
   // 削除ボタンクリック時にモーダル表示
   const confirmDelete = (id: number) => {

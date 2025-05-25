@@ -64,7 +64,7 @@ export default function SabutyanMode() {
       <Header/>
 
       <main className="washitsu min-h-screen px-4 py-6 space-y-6 flex flex-col items-center">
-        <Image src="/images/sabu1.png" alt="さぶちゃん" width={300} height={200} />
+        <Image src="/images/diary-sabu.png" alt="さぶちゃん" width={300} height={200} />
 
         {/* 今日の日記 */}
         <div className="bg-[#fff9eb] border-[4px] border-[#8d6e63] rounded-xl shadow-md p-6 w-full max-w-xl">
