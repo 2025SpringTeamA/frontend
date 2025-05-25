@@ -39,7 +39,7 @@ export default function UserManagement() {
       if (!res.ok) throw new Error("ユーザー取得に失敗");
       const data = await res.json();
       setUsers(data);
-    } catch (err) {
+    } catch (_) {
       toast.error("ユーザー一覧の取得に失敗しました。");
     }
   };
