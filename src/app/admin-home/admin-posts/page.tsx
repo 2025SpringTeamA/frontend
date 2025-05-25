@@ -76,7 +76,7 @@ export default function PostListPage() {
               {messages.length > 0 ? (
                 messages.map((msg, i) => (
                   <tr key={i}>
-                    <td className="p-2 border">{msg.user_name || "匿名"}</td>
+                    <td className="p-2 border">{msg.user?.user_name || "匿名"}</td>
                     <td className="p-2 border">{msg.content}</td>
                     <td className="p-2 border">{new Date(msg.created_at).toLocaleDateString()}</td>
                   </tr>
