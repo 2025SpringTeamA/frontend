@@ -96,7 +96,9 @@ export default function PostListPage() {
         <Image
           src="/images/sabuchan_logo.png"
           alt="さぶちゃん日記"
-          className="w-[400px] h-auto absolute bottom-4 right-4 rounded z-0 opacity-30"
+          width={400}
+          height={300}
+          className="absolute bottom-4 right-4 rounded z-0 opacity-30"
         />
       </section>
     </main>

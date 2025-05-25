@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, M_PLUS_Rounded_1c } from "next/font/google";
 import { Toaster } from 'sonner';
 import "./globals.css";
 import "../styles/common.css"; // ← 追加：和室用CSS（必要に応じて）
@@ -13,6 +13,12 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const mPlus = M_PLUS_Rounded_1c({
+  weight: "700",
+  subsets: ["latin"],
+  variable: "--font-mplus",
 });
 
 export const metadata: Metadata = {
@@ -32,15 +38,8 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <head>
-        {/* さぶちゃん日記風フォント（M PLUS Rounded 1c）を読み込み */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&display=swap"
-          rel="stylesheet"
-        />
       </head>
-      <body
-        className={`washitsu ${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`washitsu ${geistSans.variable} ${geistMono.variable} ${mPlus.variable} antialiased`}>
         {/* ✅ トースト表示コンポーネント */}
         <Toaster richColors position="top-center" />
         <main>{children}</main>
