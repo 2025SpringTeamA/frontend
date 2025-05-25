@@ -90,10 +90,6 @@ export default function AdminDashboard() {
           <Link href="/admin-home/admin-posts" className="top-button text-center">
             投稿内容の一覧
           </Link>
-
-          {/* <Link href="/admin-home/admin-settings" className="top-button text-center  text-gray-400 cursor-not-allowed pointer-events-none">
-            設定変更
-          </Link> */}
         </div>
       </aside>
 
