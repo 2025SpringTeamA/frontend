@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from 'next/image';
 import "../../../styles/common.css";
 
 export default function AdminSettingsPage() {
@@ -15,7 +16,7 @@ export default function AdminSettingsPage() {
     return () => {
       document.body.classList.remove("washitsu");
     };
-  }, []);
+  }, [fetchCurrentMessage]);
 
   // サーバーからのレスポンスの型
   interface SettingsResponse {
@@ -94,7 +95,7 @@ export default function AdminSettingsPage() {
           {status && <p className="text-sm mt-2">{status}</p>}
         </div>
 
-        <img
+        <Image
           src="/images/sabuchan_logo.png"
           alt="さぶちゃん日記"
           className="w-[400px] h-auto absolute bottom-4 right-4 rounded z-0 opacity-30"

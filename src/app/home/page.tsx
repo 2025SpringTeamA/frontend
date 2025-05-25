@@ -37,7 +37,7 @@ export default function Home() {
         const data = await res.json();
         let message = "エラーが発生しました";
         if(Array.isArray(data.detail)){
-          message = (data.detail as { msg: string }[]).map((d) => d.msg).join("/");z
+          message = (data.detail as { msg: string }[]).map((d) => d.msg).join("/");
         }else if(typeof data.detail=== 'string'){
           message=data.detail
         }

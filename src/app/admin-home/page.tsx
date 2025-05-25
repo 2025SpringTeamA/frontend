@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from 'next/image';
 import { toast } from "sonner";
 import "../../styles/common.css";
 
@@ -69,7 +70,8 @@ export default function AdminDashboard() {
       } else {
         toast.error("情報の取得に失敗しました。再ログインしてください。");
       }
-    } catch (_) {
+    } catch (e) {
+      console.error(e);
       toast.error("通信エラーが発生しました");
     }
   };
@@ -115,7 +117,7 @@ export default function AdminDashboard() {
           </ul>
         </div>
 
-        <img
+        <Image
           src="/images/sabuchan_logo.png"
           alt="さぶちゃん日記"
           className="w-[400px] h-auto absolute bottom-4 right-4 rounded z-0 opacity-30"

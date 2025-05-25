@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from 'next/image';
 import "../styles/common.css";
 
 const Home: React.FC = () => {
@@ -42,10 +43,12 @@ const Home: React.FC = () => {
       />
 
       {/* 通常の静止ロゴ */}
-      <img
+      <Image
         src="/images/sabuchan_logo.png"
         alt="さぶちゃん日記"
-        className="w-[700px] h-auto rounded z-10"
+        width={700} 
+        height={200} 
+        className="rounded z-10"
       />
 
       <p className="text-blue-400 font-semibold z-10">{message}</p>

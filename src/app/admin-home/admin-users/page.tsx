@@ -39,7 +39,8 @@ export default function UserManagement() {
       if (!res.ok) throw new Error("ユーザー取得に失敗");
       const data = await res.json();
       setUsers(data);
-    } catch (_) {
+    } catch(e) { 
+      console.error(e);
       toast.error("ユーザー一覧の取得に失敗しました。");
     }
   };
@@ -183,7 +184,7 @@ export default function UserManagement() {
           </div>
         )}
 
-        <img
+        <Image
           src="/images/sabuchan_logo.png"
           alt="さぶちゃん日記"
           className="w-[400px] h-auto absolute bottom-4 right-4 rounded z-0 opacity-30"
