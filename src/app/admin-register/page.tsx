@@ -17,7 +17,7 @@ type ErrorResponse = {
   detail?: string;
 };
 
-export default function AdminRegister(): JSX.Element {
+export default function AdminRegister() {
   const [userName, setUserName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
