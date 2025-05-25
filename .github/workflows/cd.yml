@@ -28,12 +28,21 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const runId = github.event.inputs.run_id || github.event.workflow_run.id;
+            const runId = context.payload.workflow_run
+              ? context.payload.workflow_run.id
+              : context.payload.inputs?.run_id;
+
+            if (!runId) {
+              core.setFailed("No run_id provided or found in context.");
+              return;
+            }
+
             const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
               owner: context.repo.owner,
               repo: context.repo.repo,
               run_id: runId,
             });
+
             const artifact = artifacts.data.artifacts.find(a => a.name === "frontend-build");
             if (!artifact) {
               core.setFailed("Artifact 'frontend-build' not found.");
@@ -46,7 +55,6 @@ jobs:
         with:
           name: frontend-build
           path: out
-          run-id: ${{ steps.get_artifact.outputs.artifact-id }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
