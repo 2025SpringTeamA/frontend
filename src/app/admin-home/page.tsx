@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import "../../styles/common.css";
 
 // 管理者情報の型
@@ -25,7 +24,7 @@ type Message = {
 };
 
 export default function AdminDashboard() {
-  const [_, setAdminEmail] = useState<string>("");
+  const [, setAdminEmail] = useState<string>("");
   const [adminName, setAdminName] = useState<string>("");
   const [userCount, setUserCount] = useState<number>(0);
   const [inactiveCount, setInactiveCount] = useState<number>(0);
