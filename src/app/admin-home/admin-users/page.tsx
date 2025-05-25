@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import Image from 'next/image';
 import { toast } from "sonner";
 import "../../../styles/common.css";
 
@@ -40,7 +40,7 @@ export default function UserManagement() {
       if (!res.ok) throw new Error("ユーザー取得に失敗");
       const data = await res.json();
       setUsers(data);
-    } catch(e) { 
+    } catch(e) {
       console.error(e);
       toast.error("ユーザー一覧の取得に失敗しました。");
     }
@@ -115,6 +115,7 @@ export default function UserManagement() {
         <div className="flex flex-col gap-4">
           <Link href="/admin-home/admin-users" className="top-button text-center">ユーザー管理</Link>
           <Link href="/admin-home/admin-posts" className="top-button text-center">投稿内容の一覧</Link>
+          {/* <button className="top-button ">設定変更</button> */}
         </div>
       </aside>
 
@@ -184,10 +185,12 @@ export default function UserManagement() {
           </div>
         )}
 
-        
+        <Image
           src="/images/sabuchan_logo.png"
           alt="さぶちゃん日記"
-          className="w-[400px] h-auto absolute bottom-4 right-4 rounded z-0 opacity-30"
+          width={400}
+          height={300}
+          className="absolute bottom-4 right-4 rounded z-0 opacity-30"
         />
       </section>
 
