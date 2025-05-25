@@ -46,7 +46,9 @@ const Home: React.FC = () => {
       <Image
         src="/images/sabuchan_logo.png"
         alt="さぶちゃん日記"
-        className="w-[700px] h-auto rounded z-10"
+        width={700} 
+        height={200} 
+        className="rounded z-10"
       />
 
       <p className="text-blue-400 font-semibold z-10">{message}</p>
