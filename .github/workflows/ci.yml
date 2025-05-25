@@ -32,23 +32,18 @@ jobs:
           cache-dependency-path: 'package-lock.json'
 
       - name: Install dependencies
-        working-directory: frontend
         run: npm ci
 
       - name: Run linting
-        working-directory: frontend
         run: npm run lint || echo "Linting not configured"
 
       - name: Run type check
-        working-directory: frontend
         run: npm run typecheck || npm run check-types || echo "Type check not configured"
 
       - name: Run tests
-        working-directory: frontend
         run: npm test || echo "No tests configured"
 
       - name: Build Next.js
-        working-directory: frontend
         run: |
           NEXT_PUBLIC_API_URL="${{ github.event_name != 'pull_request' && secrets.PROD_API_URL || secrets.DEV_API_URL }}" \
           NEXT_PUBLIC_ADMIN_PIN="${{ secrets.ADMIN_PIN }}" \
