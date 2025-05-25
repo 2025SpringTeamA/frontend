@@ -7,12 +7,6 @@ on:
       - completed
     branches:
       - main
-  workflow_dispatch:
-    inputs:
-      run_id:
-        description: 'run_id of uploaded artifact'
-        required: false
-        type: string
 
 jobs:
   deploy-to-s3:
@@ -28,14 +22,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const runId = context.payload.workflow_run
-              ? context.payload.workflow_run.id
-              : context.payload.inputs?.run_id;
-
-            if (!runId) {
-              core.setFailed("No run_id provided or found in context.");
-              return;
-            }
+            const runId = context.payload.workflow_run.id;
 
             const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
               owner: context.repo.owner,
@@ -46,15 +33,21 @@ jobs:
             const artifact = artifacts.data.artifacts.find(a => a.name === "frontend-build");
             if (!artifact) {
               core.setFailed("Artifact 'frontend-build' not found.");
-            } else {
-              core.setOutput("artifact-id", artifact.id);
+              return;
             }
 
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: frontend-build
-          path: out
+            core.setOutput("artifact-id", artifact.id);
+
+      - name: Download artifact zip
+        run: |
+          curl -L \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/${{ github.repository }}/actions/artifacts/${{ steps.get_artifact.outputs.artifact-id }}/zip \
+            -o artifact.zip
+
+      - name: Unzip artifact
+        run: unzip artifact.zip -d out
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
