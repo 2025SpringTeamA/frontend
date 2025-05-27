@@ -27,7 +27,7 @@ export default function Header() {
                 return;
             }
 
-            const res = await fetch("http://localhost:8000/api/logout", {
+            const res = await fetch("http://api.saburo.xyz:8000/api/logout", {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`,
