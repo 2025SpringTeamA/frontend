@@ -38,7 +38,7 @@ export default function SabutyanMode() {
         content: diaryMessage,
       };
 
-      const res = await fetch(`http://localhost:8000/api/sessions/${sessionId}/messages`, {
+      const res = await fetch(`http://api.saburo.xyz:8000/api/sessions/${sessionId}/messages`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
