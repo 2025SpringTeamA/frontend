@@ -24,7 +24,7 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:8000/api/login", {
+      const res = await fetch("http://api.saburo.xyz:8000/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +56,7 @@ export default function Login() {
 
   const handleAdminLogin = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/admin/login", {
+      const res = await fetch("http://api.saburo.xyz:8000/api/admin/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
