@@ -12,7 +12,7 @@ export default function Home() {
 
   const startSession = async (characterMode: "saburo" | "bijyo") => {
     try {
-      const res = await fetch("http://localhost:8000/api/sessions", {
+      const res = await fetch("http://api.saburo.xyz:8000/api/sessions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
