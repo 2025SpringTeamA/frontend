@@ -23,7 +23,7 @@ const Register: React.FC = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://api.saburo.xyz:8000/api/register", {
+      const res = await fetch("https://api.saburo.xyz:8000/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

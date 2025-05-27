@@ -54,7 +54,7 @@ export default function BijyoMode() {
         content: diaryMessage,
       };
 
-      const res = await fetch(`http://api.saburo.xyz:8000/api/sessions/${sessionId}/messages`, {
+      const res = await fetch(`https://api.saburo.xyz:8000/api/sessions/${sessionId}/messages`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -52,7 +52,7 @@ export default function ChatHistory() {
       if (keyword) queryParams.append("keyword", keyword);
       if (favorite) queryParams.append("favorite_only", "true");
 
-      const res = await fetch(`http://api.saburo.xyz:8000/api/sessions?${queryParams.toString()}`, {
+      const res = await fetch(`https://api.saburo.xyz:8000/api/sessions?${queryParams.toString()}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -76,7 +76,7 @@ export default function ChatHistory() {
   const handleToggleFavorite = async (sessionId: number, index: number) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://api.saburo.xyz:8000/api/sessions/${sessionId}/favorite`, {
+      const res = await fetch(`https://api.saburo.xyz:8000/api/sessions/${sessionId}/favorite`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -100,7 +100,7 @@ export default function ChatHistory() {
   const handleDelete = async (sessionId: number) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://api.saburo.xyz:8000/api/sessions/${sessionId}`, {
+      const res = await fetch(`https://api.saburo.xyz:8000/api/sessions/${sessionId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -122,7 +122,7 @@ export default function ChatHistory() {
   const showDetail = async (sessionId: number) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://api.saburo.xyz:8000/api/sessions/${sessionId}`, {
+      const res = await fetch(`https://api.saburo.xyz:8000/api/sessions/${sessionId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
