@@ -26,7 +26,7 @@ export default function PostListPage() {
   const fetchMessages = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("https://api.saburo.xyz:8000/api/messages",{
+      const res = await fetch("https://api.saburo.xyz/api/messages",{
         headers :{
           Authorization: `Bearer ${token}`,
         }

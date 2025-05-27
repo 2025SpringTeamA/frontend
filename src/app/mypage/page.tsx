@@ -21,7 +21,7 @@ export default function Home() {
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          const response = await fetch("https://api.saburo.xyz:8000/api/user/", {
+          const response = await fetch("https://api.saburo.xyz/api/user/", {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -68,7 +68,7 @@ export default function Home() {
       );
       return;
     }
-    fetch("https://api.saburo.xyz:8000/api/user/", {
+    fetch("https://api.saburo.xyz/api/user/", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -99,7 +99,7 @@ export default function Home() {
       return;
     }
 
-    fetch("https://api.saburo.xyz:8000/api/user/delete", {
+    fetch("https://api.saburo.xyz/api/user/delete", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

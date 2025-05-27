@@ -32,7 +32,7 @@ export default function UserManagement() {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("https://api.saburo.xyz:8000/api/users", {
+      const res = await fetch("https://api.saburo.xyz/api/users", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -55,7 +55,7 @@ export default function UserManagement() {
   const handleUpdate = async () => {
     try {
       const token = localStorage.getItem("token");
-      await fetch(`https://api.saburo.xyz:8000/api/users/${editUser?.id}`, {
+      await fetch(`https://api.saburo.xyz/api/users/${editUser?.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +72,7 @@ export default function UserManagement() {
 
   const handleDeactivate = async (id: number) => {
     const token = localStorage.getItem("token");
-    await fetch(`https://api.saburo.xyz:8000/api/users/${id}/deactivate`, {
+    await fetch(`https://api.saburo.xyz/api/users/${id}/deactivate`, {
       method: "PATCH",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -81,7 +81,7 @@ export default function UserManagement() {
 
   const handleActivate = async (id: number) => {
     const token = localStorage.getItem("token");
-    await fetch(`https://api.saburo.xyz:8000/api/users/${id}/activate`, {
+    await fetch(`https://api.saburo.xyz/api/users/${id}/activate`, {
       method: "PATCH",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -98,7 +98,7 @@ export default function UserManagement() {
   const handleConfirmedDelete = async () => {
     if (deleteTargetId === null) return;
     const token = localStorage.getItem("token");
-    await fetch(`https://api.saburo.xyz:8000/api/users/${deleteTargetId}`, {
+    await fetch(`https://api.saburo.xyz/api/users/${deleteTargetId}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });

@@ -36,7 +36,7 @@ export default function AdminRegister() {
     e.preventDefault();
 
     try {
-      const res = await fetch("https://api.saburo.xyz:8000/api/admin/register/", {
+      const res = await fetch("https://api.saburo.xyz/api/admin/register/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

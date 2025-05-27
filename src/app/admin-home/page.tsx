@@ -49,9 +49,9 @@ export default function AdminDashboard() {
       };
 
       const [adminRes, usersRes, messagesRes] = await Promise.all([
-        fetch("https://api.saburo.xyz:8000/api/admin_info", { headers }),
-        fetch("https://api.saburo.xyz:8000/api/users", { headers }),
-        fetch("https://api.saburo.xyz:8000/api/messages", { headers }),
+        fetch("https://api.saburo.xyz/api/admin_info", { headers }),
+        fetch("https://api.saburo.xyz/api/users", { headers }),
+        fetch("https://api.saburo.xyz/api/messages", { headers }),
       ]);
 
       if (adminRes.ok && usersRes.ok && messagesRes.ok) {
