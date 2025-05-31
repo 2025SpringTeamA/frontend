@@ -10,6 +10,8 @@ export default function SabutyanMode() {
   const [cheerMessage, setCheerMessage] = useState("");
   const [token, setToken] = useState("");
   const [sessionId, setSessionId] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
 
   useEffect(() => {
     document.body.classList.add("washitsu");
@@ -30,6 +32,9 @@ export default function SabutyanMode() {
       toast.error("セッションIDが見つかりません");
       return;
     }
+
+    if (isLoading) return;
+    setIsLoading(true);
 
     try {
       const payload = {
@@ -56,6 +61,8 @@ export default function SabutyanMode() {
     } catch (error) {
       console.error("エラー:", error);
       toast.error("エラーが発生しました");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -76,10 +83,12 @@ export default function SabutyanMode() {
           ></textarea>
           <div className="flex justify-end mt-4">
             <button
-              className="bg-green-200 border-2 border-green-600 shadow-md px-6 py-2 rounded-md font-bold"
+              className={`bg-green-200 border-2 border-green-600 shadow-md px-6 py-2 rounded-md font-bold 
+                        ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
               onClick={handleEnergy}
+              disabled={isLoading}
             >
-              元気をもらう
+              {isLoading ? "送信中..." : "元気をもらう"}
             </button>
           </div>
         </div>

@@ -11,6 +11,8 @@ export default function BijyoMode() {
   const [token, setToken] = useState("");
   const [sessionId, setSessionId] = useState("");
   const [showMom, setShowMom] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
 
   useEffect(() => {
     document.body.classList.add("washitsu");
@@ -47,6 +49,9 @@ export default function BijyoMode() {
       return;
     }
 
+    if (isLoading) return;
+    setIsLoading(true);
+
     try {
       const payload = {
         session_id: Number(sessionId),
@@ -70,6 +75,8 @@ export default function BijyoMode() {
     } catch (error) {
       console.error("エラー:", error);
       toast.error("エラーが発生しました");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -102,10 +109,12 @@ export default function BijyoMode() {
           ></textarea>
           <div className="flex justify-end mt-4">
             <button
-              className="bg-pink-200 border-2 border-pink-500 shadow-md px-6 py-2 rounded-md font-bold"
+              className={`bg-pink-200 border-2 border-pink-600 shadow-md px-6 py-2 rounded-md font-bold 
+                        ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
               onClick={handleEnergy}
+              disabled={isLoading}
             >
-              応援してもらう
+              {isLoading ? "送信中..." : "応援してもらう"}
             </button>
           </div>
         </div>
